@@ -2,6 +2,7 @@ package com.example.dicodingmovie.ui.tvshow.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -35,17 +36,15 @@ class DetailTvShowActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         val adapter = DetailTvShowAdapter()
 
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailTvShowViewModel::class.java]
+
         val extras = intent.extras
         if (extras != null) {
             val tvShowId = extras.getInt(TV_SHOW_ID)
             if (tvShowId != null) {
-                val tv_shows = DataDummy.generateDummyTvShow()
-                adapter.setTvShows(tv_shows,tvShowId)
-                for (tv_show in DataDummy.generateDummyTvShow()) {
-                    if (tv_show.id  == tvShowId) {
-                        populateTvShow(tv_show)
-                    }
-                }
+                viewModel.setSelectedTvShow(tvShowId)
+                adapter.setTvShows(viewModel.getTvShows())
+                populateTvShow(viewModel.getTvShow())
             }
             val tvShowTitle = extras.getString(TV_SHOW_TITLE)
             if (tvShowTitle != null) {

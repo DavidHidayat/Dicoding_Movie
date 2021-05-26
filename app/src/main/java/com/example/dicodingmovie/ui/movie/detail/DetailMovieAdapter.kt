@@ -11,13 +11,11 @@ class DetailMovieAdapter : RecyclerView.Adapter<DetailMovieAdapter.MovieViewHold
 
     private val listMovies = ArrayList<MovieEntity>()
 
-    fun setMovies(movies: List<MovieEntity>?, movieId: Int?) {
+    fun setMovies(movies: List<MovieEntity>?) {
         if (movies == null) return
         this.listMovies.clear()
         for (movie in movies) {
-            if (movie.id  != movieId) {
-                this.listMovies.add(movie)
-            }
+            this.listMovies.add(movie)
         }
     }
 

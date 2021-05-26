@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingmovie.R
 import com.example.dicodingmovie.data.TvShowEntity
 import com.example.dicodingmovie.databinding.FragmentTvShowBinding
-import com.example.dicodingmovie.utils.DataDummy
 
 class TvShowFragment : Fragment(),TvShowFragmentCallback {
 
@@ -27,7 +27,8 @@ class TvShowFragment : Fragment(),TvShowFragmentCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val tv_show = DataDummy.generateDummyTvShow()
+            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
+            val tv_show = viewModel.getTvShows()
             val adapter = TvShowAdapter(this)
             adapter.setTvShow(tv_show)
             with(fragmentTvShowBinding.rvBookmark) {

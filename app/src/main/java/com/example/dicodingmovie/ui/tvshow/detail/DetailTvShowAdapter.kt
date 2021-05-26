@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingmovie.data.TvShowEntity
+import com.example.dicodingmovie.databinding.ItemsMovieListBinding
 import com.example.dicodingmovie.databinding.ItemsTvShowListBinding
 
 class DetailTvShowAdapter : RecyclerView.Adapter<DetailTvShowAdapter.TvShowViewHolder>() {
 
     private val listTvShows = ArrayList<TvShowEntity>()
 
-    fun setTvShows(tv_shows: List<TvShowEntity>?, tvShowId: Int?) {
+    fun setTvShows(tv_shows: List<TvShowEntity>?) {
         if (tv_shows == null) return
         this.listTvShows.clear()
         for (tv_show in tv_shows) {
-            if (tv_show.id  != tvShowId) {
-                this.listTvShows.add(tv_show)
-            }
+            this.listTvShows.add(tv_show)
         }
     }
 

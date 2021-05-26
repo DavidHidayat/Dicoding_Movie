@@ -2,6 +2,7 @@ package com.example.dicodingmovie.ui.movie.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -35,17 +36,15 @@ class DetailMovieActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         val adapter = DetailMovieAdapter()
 
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailMovieViewModel::class.java]
+
         val extras = intent.extras
         if (extras != null) {
             val movieId = extras.getInt(MOVIE_ID)
             if (movieId != null) {
-                val movies = DataDummy.generateDummyMovies()
-                adapter.setMovies(movies,movieId)
-                for (movie in DataDummy.generateDummyMovies()) {
-                    if (movie.id  == movieId) {
-                        populateMovie(movie)
-                    }
-                }
+                viewModel.setSelectedMovie(movieId)
+                adapter.setMovies(viewModel.getMovies())
+                populateMovie(viewModel.getMovie())
             }
             val movieTitle = extras.getString(MOVIE_TITLE)
             if (movieTitle != null) {
