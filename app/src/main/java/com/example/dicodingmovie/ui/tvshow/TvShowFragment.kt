@@ -31,7 +31,7 @@ class TvShowFragment : Fragment(),TvShowFragmentCallback {
             val tv_show = viewModel.getTvShows()
             val adapter = TvShowAdapter(this)
             adapter.setTvShow(tv_show)
-            with(fragmentTvShowBinding.rvBookmark) {
+            with(fragmentTvShowBinding.rvTvShows) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 this.adapter = adapter
