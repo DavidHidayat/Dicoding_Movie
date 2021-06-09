@@ -62,9 +62,9 @@ class JsonHelper(private val context: Context) {
         return list
     }
 
-    fun loadMovie(movieId: Int): List<MovieResponse> {
+    fun loadMovie(movieId: Int): MovieResponse {
         val fileName = String.format("Movie_%s.json", movieId)
-        val list = ArrayList<MovieResponse>()
+        var movieResponse: MovieResponse? = null
         try {
             val result = parsingFileToString(fileName)
             if (result != null) {
@@ -93,14 +93,14 @@ class JsonHelper(private val context: Context) {
                         genre_ids.add(genre_list.getInt(x))
                     }
 
-                    val movieResponse = MovieResponse(adult,backdrop_path,genre_ids,id,original_language,original_title,overview,popularity,poster_path,release_date, title, video, vote_average, vote_count)
-                    list.add(movieResponse)
+                    movieResponse = MovieResponse(adult,backdrop_path,genre_ids,id,original_language,original_title,overview,popularity,poster_path,release_date, title, video, vote_average, vote_count)
+
                 }
             }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return list
+        return movieResponse as MovieResponse
     }
 
     fun loadTvShows(): List<TvShowResponse> {
@@ -133,9 +133,9 @@ class JsonHelper(private val context: Context) {
         return list
     }
 
-    fun loadTvShow(tvShowId: Int): List<TvShowResponse> {
+    fun loadTvShow(tvShowId: Int): TvShowResponse {
         val fileName = String.format("Tv_Show_%s.json", tvShowId)
-        val list = ArrayList<TvShowResponse>()
+        var tvShowResponse:TvShowResponse? =null
         try {
             val result = parsingFileToString(fileName)
             if (result != null) {
@@ -156,14 +156,13 @@ class JsonHelper(private val context: Context) {
                     val vote_average = tv_show.getDouble("vote_average")
                     val vote_count = tv_show.getInt("vote_count")
 
-                    val tvShowResponse = TvShowResponse(backdrop_path,first_air_date, id, name, original_language, original_name, overview, popularity, poster_path, vote_average, vote_count)
-                    list.add(tvShowResponse)
+                    tvShowResponse = TvShowResponse(backdrop_path,first_air_date, id, name, original_language, original_name, overview, popularity, poster_path, vote_average, vote_count)
                 }
             }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return list
+        return tvShowResponse as TvShowResponse
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.dicodingmovie.ui.movie.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.dicodingmovie.data.MovieEntity
 import com.example.dicodingmovie.data.TvShowEntity
@@ -13,21 +14,8 @@ class DetailMovieViewModel(private val appRepository: AppRepository) : ViewModel
         this.movieId = movieId
     }
 
-    fun getMovie(): MovieEntity {
-        lateinit var movie: MovieEntity
-        movie = appRepository.getMovie(movieId)
-        return movie
-    }
+    fun getMovie(): LiveData<MovieEntity> = appRepository.getMovie(movieId)
 
-    fun getMovies(): List<MovieEntity> {
-        val movies = ArrayList<MovieEntity>()
-        val moviesEntities = appRepository.getAllMovies()
-        for (movieEntity in moviesEntities) {
-            if (movieEntity.id != movieId) {
-                movies.add(movieEntity)
-            }
-        }
-        return movies
-    }
+    fun getMovies(): LiveData<List<MovieEntity>> = appRepository.getAllMovies()
 
 }

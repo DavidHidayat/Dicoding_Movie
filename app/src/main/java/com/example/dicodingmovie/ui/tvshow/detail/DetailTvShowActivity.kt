@@ -1,6 +1,7 @@
 package com.example.dicodingmovie.ui.tvshow.detail
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,7 +13,6 @@ import com.example.dicodingmovie.R
 import com.example.dicodingmovie.data.TvShowEntity
 import com.example.dicodingmovie.databinding.ActivityDetailTvShowBinding
 import com.example.dicodingmovie.databinding.ContentDetailTvShowBinding
-import com.example.dicodingmovie.utils.DataDummy
 import com.example.dicodingmovie.viewmodel.ViewModelFactory
 
 class DetailTvShowActivity : AppCompatActivity() {
@@ -45,8 +45,12 @@ class DetailTvShowActivity : AppCompatActivity() {
             val tvShowId = extras.getInt(TV_SHOW_ID)
             if (tvShowId != null) {
                 viewModel.setSelectedTvShow(tvShowId)
-                adapter.setTvShows(viewModel.getTvShows())
-                populateTvShow(viewModel.getTvShow())
+                detailTvShowBinding.progressBar.visibility = View.VISIBLE
+                viewModel.getTvShows().observe(this, { tvShows ->
+                    detailTvShowBinding.progressBar.visibility = View.GONE
+                    adapter.setTvShows(tvShows)
+//                    populateTvShow(viewModel.getTvShow())
+                })
             }
             val tvShowTitle = extras.getString(TV_SHOW_TITLE)
             if (tvShowTitle != null) {
