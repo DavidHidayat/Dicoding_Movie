@@ -1,7 +1,9 @@
 package com.example.dicodingmovie.data.source.remote
 
+
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.example.dicodingmovie.data.source.remote.response.MovieResponse
 import com.example.dicodingmovie.data.source.remote.response.TvShowResponse
 import com.example.dicodingmovie.utils.helper.JsonHelper

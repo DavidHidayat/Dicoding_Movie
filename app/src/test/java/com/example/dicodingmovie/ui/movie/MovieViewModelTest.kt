@@ -1,10 +1,15 @@
 package com.example.dicodingmovie.ui.movie
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.example.dicodingmovie.data.MovieEntity
 import com.example.dicodingmovie.data.source.AppRepository
 import com.example.dicodingmovie.utils.DataDummy
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -16,8 +21,14 @@ import org.mockito.junit.MockitoJUnitRunner
 class MovieViewModelTest  {
     private lateinit var viewModel: MovieViewModel
 
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
     @Mock
     private lateinit var appRepository: AppRepository
+
+    @Mock
+    private lateinit var observer: Observer<List<MovieEntity>>
 
     @Before
     fun setUp() {
@@ -26,10 +37,17 @@ class MovieViewModelTest  {
 
     @Test
     fun getMovies() {
-        `when`(appRepository.getAllMovies()).thenReturn(DataDummy.generateDummyMovies())
+        val dummyMovies = DataDummy.generateDummyMovies()
+        val movies = MutableLiveData<List<MovieEntity>>()
+        movies.value = dummyMovies
+
+        `when`(appRepository.getAllMovies()).thenReturn(movies)
         val movieEntities = viewModel.getMovies()
         verify<AppRepository>(appRepository).getAllMovies()
         assertNotNull(movieEntities)
-        assertEquals(12, movieEntities.size)
+        assertEquals(12, movieEntities.value?.size)
+
+        viewModel.getMovies().observeForever(observer)
+        verify(observer).onChanged(dummyMovies)
     }
 }

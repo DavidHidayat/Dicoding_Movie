@@ -21,13 +21,16 @@ class HomeActivityTest{
 
     @Test
     fun loadMovies() {
+        delay(2)
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummyMovie.size))
     }
 
     @Test
     fun loadDetailMovie() {
+        delay(4)
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        delay(2)
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_title)).check(matches(withText(dummyMovie[0].title)))
         onView(withId(R.id.tv_release_date)).check(matches(isDisplayed()))
@@ -38,15 +41,20 @@ class HomeActivityTest{
 
     @Test
     fun loadTvShows() {
+        delay(2)
         onView(withText("Tv Show")).perform(click())
+        delay(2)
         onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummyTvShow.size))
     }
 
     @Test
     fun loadDetailTvShows() {
+        delay(2)
         onView(withText("Tv Show")).perform(click())
+        delay(2)
         onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        delay(2)
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_title)).check(matches(withText(dummyTvShow[0].name)))
         onView(withId(R.id.tv_first_air_date)).check(matches(isDisplayed()))
@@ -55,4 +63,11 @@ class HomeActivityTest{
         onView(withId(R.id.tv_overview)).check(matches(withText(dummyTvShow[0].overview)))
     }
 
+    private fun delay(second:Long) {
+        try {
+            Thread.sleep(second*1000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+    }
 }

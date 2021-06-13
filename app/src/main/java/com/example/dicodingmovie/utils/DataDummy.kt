@@ -12,20 +12,24 @@ object DataDummy {
         val movies = ArrayList<MovieEntity>()
 
         movies.add(MovieEntity(
-            false,
-            "/6ELCZlTA5lGUops70hKdB83WJxH.jpg",
-            arrayListOf(28,14,12),
-            460465,
-            "en",
-            "Mortal Kombat",
-            "Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
-            2437.17,
-            "/nkayOAUBUu4mMvyNf9iHSUiPjF1.jpg",
-            "2021-04-07",
-            "Mortal Kombat",
-            false,
-            7.6,
-            2594
+            adult = false,
+            backdrop_path = "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg",
+            genre_ids = arrayListOf(
+                27,
+                9648,
+                53
+            ),
+            id = 423108,
+            original_language = "en",
+            original_title = "The Conjuring: The Devil Made Me Do It",
+            overview = "Paranormal investigators Ed and Lorraine Warren encounter what would become one of the most sensational cases from their files. The fight for the soul of a young boy takes them beyond anything they'd ever seen before, to mark the first time in U.S. history that a murder suspect would claim demonic possession as a defense.",
+            popularity = 5355.58,
+            poster_path = "/xbSuFiJbbBWCkyCCKIMfuDCA4yV.jpg",
+            release_date = "2021-05-25",
+            title = "The Conjuring: The Devil Made Me Do It",
+            video = false,
+            vote_average = 8.3,
+            vote_count = 1832
         ))
         movies.add(MovieEntity(
             false,
@@ -209,17 +213,17 @@ object DataDummy {
 
         val tv_shows = ArrayList<TvShowEntity>()
         tv_shows.add(TvShowEntity(
-            "/dYvIUzdh6TUv4IFRq8UBkX7bNNu.jpg",
-            "2021-03-24",
-            120168,
-            "Who Killed Sara?",
-            "es",
-            "¿Quién mató a Sara?",
-            "Hell-bent on exacting revenge and proving he was framed for his sister's murder, Álex sets out to unearth much more than the crime's real culprit.",
-            1606.074,
-            "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg",
-            7.8,
-            658
+            backdrop_path = "/Afp8OhiO0Ajb3NPoCBvfu2pqaeO.jpg",
+            first_air_date = "2021-06-09",
+            id = 84958,
+            name = "Loki",
+            original_language = "en",
+            original_name = "Loki",
+            overview = "After stealing the Tesseract during the events of “Avengers: Endgame,” an alternate version of Loki is brought to the mysterious Time Variance Authority, a bureaucratic organization that exists outside of time and space and monitors the timeline. They give Loki a choice: face being erased from existence due to being a “time variant”or help fix the timeline and stop a greater threat.",
+            popularity = 2696.861,
+            poster_path = "/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
+            vote_average = 8.2,
+            vote_count = 1851
         ))
         tv_shows.add(TvShowEntity(
             "/jeruqNWhqRqOR1QyqdQdHunrvU5.jpg",
