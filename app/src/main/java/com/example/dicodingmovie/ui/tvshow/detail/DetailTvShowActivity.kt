@@ -13,6 +13,7 @@ import com.example.dicodingmovie.data.TvShowEntity
 import com.example.dicodingmovie.databinding.ActivityDetailTvShowBinding
 import com.example.dicodingmovie.databinding.ContentDetailTvShowBinding
 import com.example.dicodingmovie.utils.DataDummy
+import com.example.dicodingmovie.viewmodel.ViewModelFactory
 
 class DetailTvShowActivity : AppCompatActivity() {
 
@@ -36,14 +37,15 @@ class DetailTvShowActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         val adapter = DetailTvShowAdapter()
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailTvShowViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[DetailTvShowViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
             val tvShowId = extras.getInt(TV_SHOW_ID)
             if (tvShowId != null) {
                 viewModel.setSelectedTvShow(tvShowId)
-                adapter.setTvShows(viewModel.getTvShows())
+                adapter.setTvShows(viewModel.getOthersTvShows())
                 populateTvShow(viewModel.getTvShow())
             }
             val tvShowTitle = extras.getString(TV_SHOW_TITLE)

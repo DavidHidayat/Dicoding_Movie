@@ -13,6 +13,7 @@ import com.example.dicodingmovie.data.MovieEntity
 import com.example.dicodingmovie.databinding.ActivityDetailMovieBinding
 import com.example.dicodingmovie.databinding.ContentDetailMovieBinding
 import com.example.dicodingmovie.utils.DataDummy
+import com.example.dicodingmovie.viewmodel.ViewModelFactory
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -36,14 +37,15 @@ class DetailMovieActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         val adapter = DetailMovieAdapter()
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailMovieViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
             val movieId = extras.getInt(MOVIE_ID)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                adapter.setMovies(viewModel.getMovies())
+                adapter.setMovies(viewModel.getOthersMovies())
                 populateMovie(viewModel.getMovie())
             }
             val movieTitle = extras.getString(MOVIE_TITLE)
