@@ -40,7 +40,7 @@ class DetailTvShowActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(this, factory)[DetailTvShowViewModel::class.java]
 
-        val extras = intent.extras
+        val extras = intent.extrasx
         if (extras != null) {
             val tvShowId = extras.getInt(TV_SHOW_ID)
             if (tvShowId != null) {
