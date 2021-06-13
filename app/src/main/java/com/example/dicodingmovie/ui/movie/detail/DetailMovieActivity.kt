@@ -1,6 +1,8 @@
 package com.example.dicodingmovie.ui.movie.detail
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,7 +14,6 @@ import com.example.dicodingmovie.R
 import com.example.dicodingmovie.data.MovieEntity
 import com.example.dicodingmovie.databinding.ActivityDetailMovieBinding
 import com.example.dicodingmovie.databinding.ContentDetailMovieBinding
-import com.example.dicodingmovie.utils.DataDummy
 import com.example.dicodingmovie.viewmodel.ViewModelFactory
 
 class DetailMovieActivity : AppCompatActivity() {
@@ -45,8 +46,15 @@ class DetailMovieActivity : AppCompatActivity() {
             val movieId = extras.getInt(MOVIE_ID)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                adapter.setMovies(viewModel.getOthersMovies())
-                populateMovie(viewModel.getMovie())
+                detailContentBinding.progressBar.visibility = View.VISIBLE
+                viewModel.getOthersMovies().observe(this, { movies ->
+                    adapter.setMovies(movies)
+                    adapter.notifyDataSetChanged()
+                })
+                viewModel.getMovie().observe(this, { movie ->
+                    detailContentBinding.progressBar.visibility = View.GONE
+                    populateMovie(movie)
+                })
             }
             val movieTitle = extras.getString(MOVIE_TITLE)
             if (movieTitle != null) {

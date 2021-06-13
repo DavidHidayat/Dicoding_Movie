@@ -1,6 +1,7 @@
 package com.example.dicodingmovie.utils.helper
 
 import android.content.Context
+import android.util.Log
 import com.example.dicodingmovie.data.source.remote.response.MovieResponse
 import com.example.dicodingmovie.data.source.remote.response.TvShowResponse
 import org.json.JSONException

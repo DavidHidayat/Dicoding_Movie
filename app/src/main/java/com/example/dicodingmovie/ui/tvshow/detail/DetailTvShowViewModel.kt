@@ -1,5 +1,6 @@
 package com.example.dicodingmovie.ui.tvshow.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.dicodingmovie.data.MovieEntity
 import com.example.dicodingmovie.data.TvShowEntity
@@ -13,7 +14,7 @@ class DetailTvShowViewModel(private val appRepository: AppRepository): ViewModel
         this.tvShowId = tvShowId
     }
 
-    fun getTvShow(): TvShowEntity = appRepository.getTvShow(tvShowId)
+    fun getTvShow(): LiveData<TvShowEntity> = appRepository.getTvShow(tvShowId)
 
-    fun getOthersTvShows(): List<TvShowEntity> = appRepository.getOthersTvShows(tvShowId)
+    fun getOthersTvShows(): LiveData<List<TvShowEntity>> = appRepository.getOthersTvShows(tvShowId)
 }
