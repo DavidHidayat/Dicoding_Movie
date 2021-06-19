@@ -47,7 +47,7 @@ class TvShowAdapter(private val callback: TvShowFragmentCallback) : RecyclerView
                 }
                 imgShare.setOnClickListener { callback.onShareClick(tv_show) }
                 Glide.with(itemView.context)
-                    .load("http://image.tmdb.org/t/p/w500"+tv_show.poster_path)
+                    .load(itemView.resources.getString(R.string.image_base_url,tv_show.poster_path))
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error))

@@ -18,11 +18,6 @@ import com.example.dicodingmovie.viewmodel.ViewModelFactory
 
 class DetailTvShowActivity : AppCompatActivity() {
 
-    companion object {
-        const val TV_SHOW_ID = "tv_show_id"
-        const val TV_SHOW_TITLE = "tv_show_title"
-    }
-
     private lateinit var detailTvShowBinding: ContentDetailTvShowBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +56,7 @@ class DetailTvShowActivity : AppCompatActivity() {
             }
             val tvShowTitle = extras.getString(TV_SHOW_TITLE)
             if (tvShowTitle != null) {
-                actionBar!!.title = tvShowTitle
+                actionBar?.title = tvShowTitle
             }
         }
 
@@ -81,11 +76,17 @@ class DetailTvShowActivity : AppCompatActivity() {
         detailTvShowBinding.tvFirstAirDate.text = tvShowEntity.first_air_date
 
         Glide.with(this)
-            .load("http://image.tmdb.org/t/p/w500"+tvShowEntity.poster_path)
+            .load(resources.getString(R.string.image_base_url,tvShowEntity.poster_path))
             .transform(RoundedCorners(20))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                 .error(R.drawable.ic_error))
             .into(detailTvShowBinding.imagePoster)
     }
+
+    companion object {
+        const val TV_SHOW_ID = "tv_show_id"
+        const val TV_SHOW_TITLE = "tv_show_title"
+    }
+
 }

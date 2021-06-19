@@ -18,11 +18,6 @@ import com.example.dicodingmovie.viewmodel.ViewModelFactory
 
 class DetailMovieActivity : AppCompatActivity() {
 
-    companion object {
-        const val MOVIE_ID = "movie_id"
-        const val MOVIE_TITLE = "movie_title"
-    }
-
     private lateinit var detailContentBinding: ContentDetailMovieBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +53,7 @@ class DetailMovieActivity : AppCompatActivity() {
             }
             val movieTitle = extras.getString(MOVIE_TITLE)
             if (movieTitle != null) {
-                actionBar!!.title = movieTitle
+                actionBar?.title = movieTitle
             }
         }
 
@@ -78,11 +73,17 @@ class DetailMovieActivity : AppCompatActivity() {
         detailContentBinding.tvReleaseDate.text = movieEntity.release_date
 
         Glide.with(this)
-            .load("http://image.tmdb.org/t/p/w500"+movieEntity.poster_path)
+            .load(resources.getString(R.string.image_base_url,movieEntity.poster_path))
             .transform(RoundedCorners(20))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                 .error(R.drawable.ic_error))
             .into(detailContentBinding.imagePoster)
     }
+
+    companion object {
+        const val MOVIE_ID = "movie_id"
+        const val MOVIE_TITLE = "movie_title"
+    }
+
 }

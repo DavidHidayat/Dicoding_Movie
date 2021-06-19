@@ -16,4 +16,6 @@
 
     <string name="example">Example</string>
     <string name="share_text">"Let's watch a %smovie"</string>
+
+    <string name="image_base_url">http://image.tmdb.org/t/p/w500%s</string>
 </resources>

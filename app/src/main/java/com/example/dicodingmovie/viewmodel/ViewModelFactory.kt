@@ -26,21 +26,20 @@ class ViewModelFactory private constructor(private val mAppRepository: AppReposi
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        when {
+        return return when {
             modelClass.isAssignableFrom(MovieViewModel::class.java) -> {
-                return MovieViewModel(mAppRepository) as T
+                MovieViewModel(mAppRepository) as T
             }
             modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
-                return DetailMovieViewModel(mAppRepository) as T
+                DetailMovieViewModel(mAppRepository) as T
             }
             modelClass.isAssignableFrom(TvShowViewModel::class.java) -> {
-                return TvShowViewModel(mAppRepository) as T
+                TvShowViewModel(mAppRepository) as T
             }
             modelClass.isAssignableFrom(DetailTvShowViewModel::class.java) -> {
-                return DetailTvShowViewModel(mAppRepository) as T
+                DetailTvShowViewModel(mAppRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
-
     }
 }
