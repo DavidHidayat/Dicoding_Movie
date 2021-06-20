@@ -5,15 +5,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TvShowResponse(
-    var backdrop_path:String,
-    var first_air_date:String,
+    var backdropPath:String,
+    var firstAirDate:String,
     var id : Int,
     var name : String,
-    var original_language : String,
-    var original_name : String,
+    var originalLanguage : String,
+    var originalName : String,
     val overview : String,
     var popularity : Double,
-    var poster_path : String,
-    val vote_average : Double,
-    val vote_count : Int
+    var posterPath : String,
+    val voteAverage : Double,
+    val voteCount : Int
 ) : Parcelable

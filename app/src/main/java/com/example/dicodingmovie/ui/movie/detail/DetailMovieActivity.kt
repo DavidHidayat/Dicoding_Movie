@@ -70,10 +70,10 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun populateMovie(movieEntity: MovieEntity) {
         detailContentBinding.tvTitle.text = movieEntity.title
         detailContentBinding.tvOverview.text = movieEntity.overview
-        detailContentBinding.tvReleaseDate.text = movieEntity.release_date
+        detailContentBinding.tvReleaseDate.text = movieEntity.releaseDate
 
         Glide.with(this)
-            .load(resources.getString(R.string.image_base_url,movieEntity.poster_path))
+            .load(resources.getString(R.string.image_base_url,movieEntity.posterPath))
             .transform(RoundedCorners(20))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)

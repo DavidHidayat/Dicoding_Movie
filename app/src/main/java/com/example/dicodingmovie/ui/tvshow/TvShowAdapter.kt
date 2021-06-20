@@ -37,7 +37,7 @@ class TvShowAdapter(private val callback: TvShowFragmentCallback) : RecyclerView
         fun bind(tv_show: TvShowEntity) {
             with(binding) {
                 tvItemTitle.text = tv_show.name
-                tvFirstAirDate.text = tv_show.first_air_date.substring(0,4)
+                tvFirstAirDate.text = tv_show.firstAirDate.substring(0,4)
                 tvItemOverview.text = if(tv_show.overview.length > 30 ) tv_show.overview.substring(0,25)+" ...Read More" else tv_show.overview
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailTvShowActivity::class.java)
@@ -47,7 +47,7 @@ class TvShowAdapter(private val callback: TvShowFragmentCallback) : RecyclerView
                 }
                 imgShare.setOnClickListener { callback.onShareClick(tv_show) }
                 Glide.with(itemView.context)
-                    .load(itemView.resources.getString(R.string.image_base_url,tv_show.poster_path))
+                    .load(itemView.resources.getString(R.string.image_base_url,tv_show.posterPath))
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error))

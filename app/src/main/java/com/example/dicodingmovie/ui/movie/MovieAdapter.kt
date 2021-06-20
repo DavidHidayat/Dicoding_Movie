@@ -40,7 +40,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MoviesViewHolder>() {
         fun bind(movie: MovieEntity) {
             with(binding) {
                 tvItemTitle.text = movie.title
-                tvItemReleaseDate.text = movie.release_date.substring(0,4)
+                tvItemReleaseDate.text = movie.releaseDate.substring(0,4)
                 tvItemOverview.text = if(movie.overview.length > 30 ) movie.overview.substring(0,25)+" ...Read More" else movie.overview
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailMovieActivity::class.java)
@@ -49,7 +49,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MoviesViewHolder>() {
                     itemView.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)
-                    .load(itemView.resources.getString(R.string.image_base_url, movie.poster_path))
+                    .load(itemView.resources.getString(R.string.image_base_url, movie.posterPath))
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error))

@@ -13,23 +13,23 @@ object DataDummy {
 
         movies.add(MovieEntity(
             adult = false,
-            backdrop_path = "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg",
-            genre_ids = arrayListOf(
+            backdropPath = "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg",
+            genreIds = arrayListOf(
                 27,
                 9648,
                 53
             ),
             id = 423108,
-            original_language = "en",
-            original_title = "The Conjuring: The Devil Made Me Do It",
+            originalLanguage = "en",
+            originalTitle = "The Conjuring: The Devil Made Me Do It",
             overview = "Paranormal investigators Ed and Lorraine Warren encounter what would become one of the most sensational cases from their files. The fight for the soul of a young boy takes them beyond anything they'd ever seen before, to mark the first time in U.S. history that a murder suspect would claim demonic possession as a defense.",
             popularity = 5355.58,
-            poster_path = "/xbSuFiJbbBWCkyCCKIMfuDCA4yV.jpg",
-            release_date = "2021-05-25",
+            posterPath = "/xbSuFiJbbBWCkyCCKIMfuDCA4yV.jpg",
+            releaseDate = "2021-05-25",
             title = "The Conjuring: The Devil Made Me Do It",
             video = false,
-            vote_average = 8.3,
-            vote_count = 1832
+            voteAverage = 8.3,
+            voteCount = 1832
         ))
         movies.add(MovieEntity(
             false,
@@ -213,17 +213,17 @@ object DataDummy {
 
         val tv_shows = ArrayList<TvShowEntity>()
         tv_shows.add(TvShowEntity(
-            backdrop_path = "/Afp8OhiO0Ajb3NPoCBvfu2pqaeO.jpg",
-            first_air_date = "2021-06-09",
+            backdropPath = "/Afp8OhiO0Ajb3NPoCBvfu2pqaeO.jpg",
+            firstAirDate = "2021-06-09",
             id = 84958,
             name = "Loki",
-            original_language = "en",
-            original_name = "Loki",
+            originalLanguage = "en",
+            originalName = "Loki",
             overview = "After stealing the Tesseract during the events of “Avengers: Endgame,” an alternate version of Loki is brought to the mysterious Time Variance Authority, a bureaucratic organization that exists outside of time and space and monitors the timeline. They give Loki a choice: face being erased from existence due to being a “time variant”or help fix the timeline and stop a greater threat.",
             popularity = 2696.861,
-            poster_path = "/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
-            vote_average = 8.2,
-            vote_count = 1851
+            posterPath = "/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
+            voteAverage = 8.2,
+            voteCount = 1851
         ))
         tv_shows.add(TvShowEntity(
             "/jeruqNWhqRqOR1QyqdQdHunrvU5.jpg",

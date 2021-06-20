@@ -27,19 +27,19 @@ class AppRepository private constructor(private val remoteDataSource: RemoteData
                 for (response in movieResponses) {
                     val movie = MovieEntity(
                         response.adult,
-                        response.backdrop_path,
-                        response.genre_ids,
+                        response.backdropPath,
+                        response.genreIds,
                         response.id,
-                        response.original_language,
-                        response.original_title,
+                        response.originalLanguage,
+                        response.originalTitle,
                         response.overview,
                         response.popularity,
-                        response.poster_path,
-                        response.release_date,
+                        response.posterPath,
+                        response.releaseDate,
                         response.title,
                         response.video,
-                        response.vote_average,
-                        response.vote_count
+                        response.voteAverage,
+                        response.voteCount
                     )
                     movieList.add(movie)
                 }
@@ -54,20 +54,22 @@ class AppRepository private constructor(private val remoteDataSource: RemoteData
             override fun onMovieReceived(response: MovieResponse?) {
                 lateinit var movie: MovieEntity
                 if (response != null) {
-                    movie = MovieEntity(response.adult,
-                        response.backdrop_path,
-                        response.genre_ids,
+                    movie = MovieEntity(
+                        response.adult,
+                        response.backdropPath,
+                        response.genreIds,
                         response.id,
-                        response.original_language,
-                        response.original_title,
+                        response.originalLanguage,
+                        response.originalTitle,
                         response.overview,
                         response.popularity,
-                        response.poster_path,
-                        response.release_date,
+                        response.posterPath,
+                        response.releaseDate,
                         response.title,
                         response.video,
-                        response.vote_average,
-                        response.vote_count)
+                        response.voteAverage,
+                        response.voteCount
+                    )
                     movieResults.postValue(movie)
                 }
             }
@@ -82,19 +84,19 @@ class AppRepository private constructor(private val remoteDataSource: RemoteData
                 for (response in movieResponses) {
                     val movie = MovieEntity(
                         response.adult,
-                        response.backdrop_path,
-                        response.genre_ids,
+                        response.backdropPath,
+                        response.genreIds,
                         response.id,
-                        response.original_language,
-                        response.original_title,
+                        response.originalLanguage,
+                        response.originalTitle,
                         response.overview,
                         response.popularity,
-                        response.poster_path,
-                        response.release_date,
+                        response.posterPath,
+                        response.releaseDate,
                         response.title,
                         response.video,
-                        response.vote_average,
-                        response.vote_count
+                        response.voteAverage,
+                        response.voteCount
                     )
                     movieList.add(movie)
                 }
@@ -111,17 +113,17 @@ class AppRepository private constructor(private val remoteDataSource: RemoteData
                 val tvShowList = ArrayList<TvShowEntity>()
                 for (response in tvShowResponses) {
                     val tvShow = TvShowEntity(
-                        response.backdrop_path,
-                        response.first_air_date,
+                        response.backdropPath,
+                        response.firstAirDate,
                         response.id,
                         response.name,
-                        response.original_language,
-                        response.original_name,
+                        response.originalLanguage,
+                        response.originalName,
                         response.overview,
                         response.popularity,
-                        response.poster_path,
-                        response.vote_average,
-                        response.vote_count
+                        response.posterPath,
+                        response.voteAverage,
+                        response.voteCount
                     )
                     tvShowList.add(tvShow)
                 }
@@ -137,17 +139,17 @@ class AppRepository private constructor(private val remoteDataSource: RemoteData
                 lateinit var tvShow: TvShowEntity
                 if (response != null) {
                     tvShow = TvShowEntity(
-                        response.backdrop_path,
-                        response.first_air_date,
+                        response.backdropPath,
+                        response.firstAirDate,
                         response.id,
                         response.name,
-                        response.original_language,
-                        response.original_name,
+                        response.originalLanguage,
+                        response.originalName,
                         response.overview,
                         response.popularity,
-                        response.poster_path,
-                        response.vote_average,
-                        response.vote_count
+                        response.posterPath,
+                        response.voteAverage,
+                        response.voteCount
                     )
                     tvShowResults.postValue(tvShow)
                 }
@@ -162,17 +164,17 @@ class AppRepository private constructor(private val remoteDataSource: RemoteData
                 val tvShowList = ArrayList<TvShowEntity>()
                 for (response in tvShowResponses) {
                     val tvShow = TvShowEntity(
-                        response.backdrop_path,
-                        response.first_air_date,
+                        response.backdropPath,
+                        response.firstAirDate,
                         response.id,
                         response.name,
-                        response.original_language,
-                        response.original_name,
+                        response.originalLanguage,
+                        response.originalName,
                         response.overview,
                         response.popularity,
-                        response.poster_path,
-                        response.vote_average,
-                        response.vote_count
+                        response.posterPath,
+                        response.voteAverage,
+                        response.voteCount
                     )
                     tvShowList.add(tvShow)
                 }

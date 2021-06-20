@@ -73,10 +73,10 @@ class DetailTvShowActivity : AppCompatActivity() {
     private fun populateTvShow(tvShowEntity: TvShowEntity) {
         detailTvShowBinding.tvTitle.text = tvShowEntity.name
         detailTvShowBinding.tvOverview.text = tvShowEntity.overview
-        detailTvShowBinding.tvFirstAirDate.text = tvShowEntity.first_air_date
+        detailTvShowBinding.tvFirstAirDate.text = tvShowEntity.firstAirDate
 
         Glide.with(this)
-            .load(resources.getString(R.string.image_base_url,tvShowEntity.poster_path))
+            .load(resources.getString(R.string.image_base_url,tvShowEntity.posterPath))
             .transform(RoundedCorners(20))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
