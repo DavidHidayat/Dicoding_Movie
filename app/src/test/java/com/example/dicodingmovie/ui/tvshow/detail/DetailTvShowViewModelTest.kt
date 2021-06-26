@@ -3,9 +3,8 @@ package com.example.dicodingmovie.ui.tvshow.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.dicodingmovie.data.MovieEntity
-import com.example.dicodingmovie.data.TvShowEntity
-import com.example.dicodingmovie.data.source.AppRepository
+import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
+import com.example.dicodingmovie.data.AppRepository
 import com.example.dicodingmovie.utils.DataDummy
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull

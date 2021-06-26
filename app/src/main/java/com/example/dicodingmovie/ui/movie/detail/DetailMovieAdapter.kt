@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dicodingmovie.data.MovieEntity
+import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.databinding.ItemsMovieListBinding
 
 class DetailMovieAdapter : RecyclerView.Adapter<DetailMovieAdapter.MovieViewHolder>() {

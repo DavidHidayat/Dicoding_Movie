@@ -3,7 +3,7 @@ package com.example.dicodingmovie.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.dicodingmovie.data.source.AppRepository
+import com.example.dicodingmovie.data.AppRepository
 import com.example.dicodingmovie.di.Injection
 import com.example.dicodingmovie.ui.movie.MovieViewModel
 import com.example.dicodingmovie.ui.movie.detail.DetailMovieViewModel

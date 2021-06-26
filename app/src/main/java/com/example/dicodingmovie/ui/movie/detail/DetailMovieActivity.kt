@@ -1,8 +1,8 @@
 package com.example.dicodingmovie.ui.movie.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -11,10 +11,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.dicodingmovie.R
-import com.example.dicodingmovie.data.MovieEntity
+import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.databinding.ActivityDetailMovieBinding
 import com.example.dicodingmovie.databinding.ContentDetailMovieBinding
 import com.example.dicodingmovie.viewmodel.ViewModelFactory
+import com.example.dicodingmovie.vo.Status
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -41,14 +42,36 @@ class DetailMovieActivity : AppCompatActivity() {
             val movieId = extras.getInt(MOVIE_ID)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                detailContentBinding.progressBar.visibility = View.VISIBLE
-                viewModel.getOthersMovies().observe(this, { movies ->
-                    adapter.setMovies(movies)
-                    adapter.notifyDataSetChanged()
+                viewModel.getMovie().observe(this, { movies ->
+                    if (movies != null) {
+                        when (movies.status) {
+                            Status.LOADING -> detailContentBinding?.progressBar?.visibility = View.VISIBLE
+                            Status.SUCCESS -> if (movies.data != null) {
+                                detailContentBinding?.progressBar?.visibility = View.GONE
+                                populateMovie(movies.data[0])
+                            }
+                            Status.ERROR -> {
+                                detailContentBinding?.progressBar?.visibility = View.GONE
+                                Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 })
-                viewModel.getMovie().observe(this, { movie ->
-                    detailContentBinding.progressBar.visibility = View.GONE
-                    populateMovie(movie)
+                viewModel.getOthersMovies().observe(this, { movies ->
+                    if (movies != null) {
+                        when (movies.status) {
+                            Status.LOADING -> detailContentBinding?.progressBar?.visibility = View.VISIBLE
+                            Status.SUCCESS -> if (movies.data != null) {
+                                detailContentBinding?.progressBar?.visibility = View.GONE
+                                adapter.setMovies(movies.data)
+                                adapter.notifyDataSetChanged()
+                            }
+                            Status.ERROR -> {
+                                detailContentBinding?.progressBar?.visibility = View.GONE
+                                Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 })
             }
             val movieTitle = extras.getString(MOVIE_TITLE)
@@ -57,11 +80,11 @@ class DetailMovieActivity : AppCompatActivity() {
             }
         }
 
-        with(detailContentBinding.rvMovies) {
+        with(detailContentBinding?.rvMovies) {
             isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(this@DetailMovieActivity)
             setHasFixedSize(true)
-            this.adapter = adapter
+            this?.adapter = adapter
             val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
         }

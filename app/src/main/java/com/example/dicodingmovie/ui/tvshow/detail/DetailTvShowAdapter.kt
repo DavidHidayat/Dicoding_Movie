@@ -4,8 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dicodingmovie.data.TvShowEntity
-import com.example.dicodingmovie.databinding.ItemsMovieListBinding
+import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
 import com.example.dicodingmovie.databinding.ItemsTvShowListBinding
 
 class DetailTvShowAdapter : RecyclerView.Adapter<DetailTvShowAdapter.TvShowViewHolder>() {

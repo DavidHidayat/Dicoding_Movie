@@ -9,17 +9,20 @@ buildscript {
         junitExtversion = '1.1.2'
         espressoVersion = '3.3.0'
         androidTestVersion = '1.3.0'
-        androidXTestVersion = '1.2.0'
         androidCoreTestVersion = '2.1.0'
-        mockitoVersion = '3.10.0'
+        mockitoVersion = '3.6.0'
         mockitoKotlinVersion = '2.2.0'
-        idleResourceVersion = '3.2.0'
+        idleResourceVersion = '3.3.0'
 
         materialVersion = '1.2.1'
         recyclerViewVersion = '1.1.0'
         glideVersion = '4.11.0'
+
+        archLifecycleVersion = '2.2.0'
+        roomRuntimeVersion = '2.2.5'
+        roomVersion = '2.2.3'
     }
-    ext.kotlin_version = "1.5.10"
+    ext.kotlin_version = "1.4.20"
     repositories {
         google()
         jcenter()

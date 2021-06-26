@@ -1,14 +1,13 @@
 package com.example.dicodingmovie.ui.movie
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.dicodingmovie.R
-import com.example.dicodingmovie.data.MovieEntity
+import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.databinding.ItemsMovieBinding
 import com.example.dicodingmovie.ui.movie.detail.DetailMovieActivity
 import kotlin.collections.ArrayList

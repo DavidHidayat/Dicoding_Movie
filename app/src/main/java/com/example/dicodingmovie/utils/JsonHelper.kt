@@ -1,7 +1,6 @@
-package com.example.dicodingmovie.utils.helper
+package com.example.dicodingmovie.utils
 
 import android.content.Context
-import android.util.Log
 import com.example.dicodingmovie.data.source.remote.response.MovieResponse
 import com.example.dicodingmovie.data.source.remote.response.TvShowResponse
 import org.json.JSONException
@@ -61,9 +60,9 @@ class JsonHelper(private val context: Context) {
         return list
     }
 
-    fun loadMovie(movieId: Int): MovieResponse? {
+    fun loadMovie(movieId: Int): List<MovieResponse> {
         val fileName = String.format("Movie_%s.json", movieId)
-        var data:MovieResponse? =null
+        val list = ArrayList<MovieResponse>()
         try {
             val responseObject = JSONObject(parsingFileToString(fileName).toString())
             val adult = responseObject.getBoolean("adult")
@@ -85,12 +84,13 @@ class JsonHelper(private val context: Context) {
             for (x in 0 until genre_ids_list.length()) {
                 genre_ids.add(genre_ids_list.getInt(x))
             }
-            data = MovieResponse(adult, backdrop_path, genre_ids, id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
+            val data = MovieResponse(adult, backdrop_path, genre_ids, id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
+            list.add(data)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
 
-        return data
+        return list
     }
 
     fun loadOtherMovies(movieId: Int): List<MovieResponse> {
@@ -163,10 +163,11 @@ class JsonHelper(private val context: Context) {
         return list
     }
 
-    fun loadTvShow(tvShowId: Int): TvShowResponse? {
+    fun loadTvShow(tvShowId: Int): List<TvShowResponse> {
         val fileName = String.format("TvShow_%s.json", tvShowId)
-        var data:TvShowResponse? =null
+        val list = ArrayList<TvShowResponse>()
         try {
+
             val responseObject = JSONObject(parsingFileToString(fileName).toString())
             val backdrop_path = responseObject.getString("backdrop_path")
             val first_air_date = responseObject.getString("first_air_date")
@@ -180,12 +181,13 @@ class JsonHelper(private val context: Context) {
             val vote_average = responseObject.getDouble("vote_average")
             val vote_count = responseObject.getInt("vote_count")
 
-            data = TvShowResponse(backdrop_path,first_air_date,id,name,original_language,original_name,overview,popularity,poster_path, vote_average, vote_count)
+            val data = TvShowResponse(backdrop_path,first_air_date,id,name,original_language,original_name,overview,popularity,poster_path, vote_average, vote_count)
+            list.add(data)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
 
-        return data
+        return list
     }
 
 

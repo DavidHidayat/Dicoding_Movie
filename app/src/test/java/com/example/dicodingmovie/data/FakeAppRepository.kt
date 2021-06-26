@@ -2,9 +2,8 @@ package com.example.dicodingmovie.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.dicodingmovie.data.MovieEntity
-import com.example.dicodingmovie.data.TvShowEntity
-import com.example.dicodingmovie.data.source.AppDataSource
+import com.example.dicodingmovie.data.source.local.entity.MovieEntity
+import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
 import com.example.dicodingmovie.data.source.remote.RemoteDataSource
 import com.example.dicodingmovie.data.source.remote.response.MovieResponse
 import com.example.dicodingmovie.data.source.remote.response.TvShowResponse

@@ -1,7 +1,7 @@
 package com.example.dicodingmovie.utils
 
-import com.example.dicodingmovie.data.MovieEntity
-import com.example.dicodingmovie.data.TvShowEntity
+import com.example.dicodingmovie.data.source.local.entity.MovieEntity
+import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
 import com.example.dicodingmovie.data.source.remote.response.MovieResponse
 import com.example.dicodingmovie.data.source.remote.response.TvShowResponse
 
@@ -11,7 +11,8 @@ object DataDummy {
 
         val movies = ArrayList<MovieEntity>()
 
-        movies.add(MovieEntity(
+        movies.add(
+            MovieEntity(
             adult = false,
             backdropPath = "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg",
             genreIds = arrayListOf(
@@ -30,8 +31,10 @@ object DataDummy {
             video = false,
             voteAverage = 8.3,
             voteCount = 1832
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/fPGeS6jgdLovQAKunNHX8l0avCy.jpg",
             arrayListOf(28,12,53,10752),
@@ -46,8 +49,10 @@ object DataDummy {
             false,
             7.3,
             952
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/ouOojiypBE6CD1aqcHPVq7cJf2R.jpg",
             arrayListOf(53,18,28,9648),
@@ -62,8 +67,10 @@ object DataDummy {
             false,
             7.2,
             227
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/inJjDhCjfhh3RtrJWBmmDqeuSYC.jpg",
             arrayListOf(878,28,18),
@@ -78,8 +85,10 @@ object DataDummy {
             false,
             8.1,
             5596
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/lkInRiMtLgl9u9xE0By5hqf66K8.jpg",
             arrayListOf(27),
@@ -94,8 +103,10 @@ object DataDummy {
             false,
             5.6,
             96
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/lHhc60NXYzswU4TvKSo45nY9Jzs.jpg",
             arrayListOf(16,35,10,10751,12),
@@ -110,8 +121,10 @@ object DataDummy {
             false,
             7.9,
             322
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/6zbKgwgaaCyyBXE4Sun4oWQfQmi.jpg",
             arrayListOf(28,53,80,35),
@@ -126,8 +139,10 @@ object DataDummy {
             false,
             8.4,
             1569
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg",
             arrayListOf(16,28,12,14,18),
@@ -142,8 +157,10 @@ object DataDummy {
             false,
             8.4,
             987
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/7prYzufdIOy1KCTZKVWpjBFqqNr.jpg",
             arrayListOf(16,12,14,10751,28),
@@ -158,8 +175,10 @@ object DataDummy {
             false,
             8.2,
             2862
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/5Zv5KmgZzdIvXz2KC3n0MyecSNL.jpg",
             arrayListOf(28,53,80),
@@ -174,8 +193,10 @@ object DataDummy {
             false,
             7.4,
             474
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/mYM8x2Atv4MaLulaV0KVJWI1Djv.jpg",
             arrayListOf(28,80,53),
@@ -190,8 +211,10 @@ object DataDummy {
             false,
             6.2,
             95
-        ))
-        movies.add(MovieEntity(
+        )
+        )
+        movies.add(
+            MovieEntity(
             false,
             "/ovggmAOu1IbPGTQE8lg4lBasNC7.jpg",
             arrayListOf(878,28,12,53),
@@ -206,13 +229,15 @@ object DataDummy {
             false,
             7.1,
             606
-        ))
+        )
+        )
         return movies
     }
     fun generateDummyTvShow(): List<TvShowEntity> {
 
         val tv_shows = ArrayList<TvShowEntity>()
-        tv_shows.add(TvShowEntity(
+        tv_shows.add(
+            TvShowEntity(
             backdropPath = "/Afp8OhiO0Ajb3NPoCBvfu2pqaeO.jpg",
             firstAirDate = "2021-06-09",
             id = 84958,
@@ -224,8 +249,10 @@ object DataDummy {
             posterPath = "/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
             voteAverage = 8.2,
             voteCount = 1851
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/jeruqNWhqRqOR1QyqdQdHunrvU5.jpg",
             "2014-10-07",
             60735,
@@ -237,8 +264,10 @@ object DataDummy {
             "/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg",
             7.7,
             7659
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/b0WmHGc8LHTdGCVzxRb3IBMur57.jpg",
             "2021-03-19",
             88396,
@@ -250,8 +279,10 @@ object DataDummy {
             "/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
             7.9,
             5586
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/mZjZgY6ObiKtVuKVDrnS9VnuNlE.jpg",
             "2017-09-25",
             71712,
@@ -263,8 +294,10 @@ object DataDummy {
             "/6tfT03sGp9k4c0J3dypjrI8TSAI.jpg",
             8.6,
             8448
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/6UH52Fmau8RPsMAbQbjwN3wJSCj.jpg",
             "2021-03-26",
             95557,
@@ -276,8 +309,10 @@ object DataDummy {
             "/yDWJYRAwMNKbIYT8ZB33qy84uzO.jpg",
             8.9,
             1759
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/edmk8xjGBsYVIf4QtLY9WMaMcXZ.jpg",
             "2005-03-27",
             1416,
@@ -289,8 +324,10 @@ object DataDummy {
             "/clnyhPqj1SNgpAdeSS6a6fwE6Bo.jpg",
             8.2,
             6083
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/nBrkOZyI75artyizuBFeya48KbO.jpg",
             "2019-03-15",
             86831,
@@ -302,8 +339,10 @@ object DataDummy {
             "/asDqvkE66EegtKJJXIRhBJPxscr.jpg",
             8.2,
             1066
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/ncftkNAjIz2PBbUMY7T0CHVJP8d.jpg",
             "2016-01-25",
             63174,
@@ -315,8 +354,10 @@ object DataDummy {
             "/4EYPN5mVIhKLfxGruy7Dy41dTVn.jpg",
             8.5,
             8620
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/qZtAf4Z1lazGQoYVXiHOrvLr5lI.jpg",
             "2017-01-26",
             69050,
@@ -328,8 +369,10 @@ object DataDummy {
             "/wRbjVBdDo5qHAEOVYoMWpM58FSA.jpg",
             8.6,
             11292
-        ))
-        tv_shows.add(TvShowEntity(
+        )
+        )
+        tv_shows.add(
+            TvShowEntity(
             "/4YKkS95v9o9c0tBVA46xIn6M1tx.jpg",
             "2021-05-07",
             93484,
@@ -341,7 +384,8 @@ object DataDummy {
             "/9yxep7oJdkj3Pla9TD9gKflRApY.jpg",
             7.4,
             231
-        ))
+        )
+        )
         return tv_shows
     }
 
