@@ -1,9 +1,12 @@
 package com.example.dicodingmovie.ui.movie.detail
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,12 +22,21 @@ import com.example.dicodingmovie.vo.Status
 
 class DetailMovieActivity : AppCompatActivity() {
 
+    private lateinit var activityDetailMovieBinding: ActivityDetailMovieBinding
     private lateinit var detailContentBinding: ContentDetailMovieBinding
+
+    private lateinit var viewModel: DetailMovieViewModel
+    private var menu: Menu? = null
+
+    companion object {
+        const val MOVIE_ID = "movie_id"
+        const val MOVIE_TITLE = "movie_title"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val activityDetailMovieBinding = ActivityDetailMovieBinding.inflate(layoutInflater)
+        activityDetailMovieBinding = ActivityDetailMovieBinding.inflate(layoutInflater)
         detailContentBinding = activityDetailMovieBinding.detailMovie
 
         setContentView(activityDetailMovieBinding.root)
@@ -35,20 +47,20 @@ class DetailMovieActivity : AppCompatActivity() {
         val adapter = DetailMovieAdapter()
 
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
             val movieId = extras.getInt(MOVIE_ID)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                viewModel.getMovie().observe(this, { movies ->
+                viewModel.movieById.observe(this, { movies ->
                     if (movies != null) {
                         when (movies.status) {
                             Status.LOADING -> detailContentBinding?.progressBar?.visibility = View.VISIBLE
                             Status.SUCCESS -> if (movies.data != null) {
                                 detailContentBinding?.progressBar?.visibility = View.GONE
-                                populateMovie(movies.data[0])
+                                populateMovie(movies.data)
                             }
                             Status.ERROR -> {
                                 detailContentBinding?.progressBar?.visibility = View.GONE
@@ -57,7 +69,7 @@ class DetailMovieActivity : AppCompatActivity() {
                         }
                     }
                 })
-                viewModel.getOthersMovies().observe(this, { movies ->
+                viewModel.getOthersMovies.observe(this, { movies ->
                     if (movies != null) {
                         when (movies.status) {
                             Status.LOADING -> detailContentBinding?.progressBar?.visibility = View.VISIBLE
@@ -74,6 +86,7 @@ class DetailMovieActivity : AppCompatActivity() {
                     }
                 })
             }
+
             val movieTitle = extras.getString(MOVIE_TITLE)
             if (movieTitle != null) {
                 actionBar?.title = movieTitle
@@ -88,6 +101,7 @@ class DetailMovieActivity : AppCompatActivity() {
             val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
         }
+
     }
 
     private fun populateMovie(movieEntity: MovieEntity) {
@@ -104,9 +118,41 @@ class DetailMovieActivity : AppCompatActivity() {
             .into(detailContentBinding.imagePoster)
     }
 
-    companion object {
-        const val MOVIE_ID = "movie_id"
-        const val MOVIE_TITLE = "movie_title"
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        this.menu = menu
+        viewModel.movieById.observe(this, { movie ->
+            if (movie != null) {
+                when (movie.status) {
+                    Status.LOADING -> detailContentBinding.progressBar.visibility = View.VISIBLE
+                    Status.SUCCESS -> if (movie.data != null) {
+                        detailContentBinding.progressBar.visibility = View.GONE
+                        val state = movie.data.bookmarked
+                        setBookmarkState(state)
+                    }
+                    Status.ERROR -> {
+                        detailContentBinding.progressBar.visibility = View.GONE
+                        Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+        return true
     }
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_bookmark) {
+            viewModel.setBookmark()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+    private fun setBookmarkState(state: Boolean) {
+        if (menu == null) return
+        val menuItem = menu?.findItem(R.id.action_bookmark)
+        if (state) {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmarked_white)
+        } else {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_white)
+        }
+    }
 }

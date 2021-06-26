@@ -12,17 +12,20 @@ interface AppDao {
 
     @Transaction
     @Query("SELECT * FROM movieentities WHERE id != :movieId")
-    fun getOthersMovies(movieId:Int):LiveData<List<MovieEntity>>
+    fun getOthersMovies(movieId: Int?):LiveData<List<MovieEntity>>
 
     @Transaction
     @Query("SELECT * FROM movieentities WHERE id = :movieId")
-    fun getMovieById(movieId:Int):LiveData<List<MovieEntity>>
+    fun getMovieById(movieId:Int):LiveData<MovieEntity>
+
+    @Query("SELECT * FROM movieentities where bookmarked = 1")
+    fun getBookmarkedMovie(): LiveData<List<MovieEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovies(courses: List<MovieEntity>)
+    fun insertMovies(movies: List<MovieEntity>)
 
     @Update
-    fun updateMovie(course: MovieEntity)
+    fun updateMovie(movie: MovieEntity)
 
     @Query("SELECT * FROM tvshowentities")
     fun getTvShows():LiveData<List<TvShowEntity>>
@@ -36,11 +39,9 @@ interface AppDao {
     fun getTvShowById(tvShowId:Int):LiveData<List<TvShowEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTvShows(courses: List<TvShowEntity>)
+    fun insertTvShows(tvShows: List<TvShowEntity>)
 
     @Update
-    fun updateTvShow(course: TvShowEntity)
-
-
+    fun updateTvShow(tvShow: TvShowEntity)
 
 }

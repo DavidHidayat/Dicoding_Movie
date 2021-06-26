@@ -33,6 +33,12 @@ class ViewModelFactory private constructor(private val mAppRepository: AppReposi
             modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
                 DetailMovieViewModel(mAppRepository) as T
             }
+            modelClass.isAssignableFrom(MovieViewModel::class.java) -> {
+                MovieViewModel(mAppRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
+                DetailMovieViewModel(mAppRepository) as T
+            }
             modelClass.isAssignableFrom(TvShowViewModel::class.java) -> {
                 TvShowViewModel(mAppRepository) as T
             }

@@ -1,7 +1,6 @@
 package com.example.dicodingmovie.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.dicodingmovie.data.source.local.LocalDataSource
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
@@ -41,7 +40,6 @@ class AppRepository private constructor(
                     val course = MovieEntity(
                         response.adult,
                         response.backdropPath,
-                        response.genreIds,
                         response.id,
                         response.originalLanguage,
                         response.originalTitle,
@@ -61,7 +59,47 @@ class AppRepository private constructor(
             }
         }.asLiveData()
     }
-    override fun getOthersMovies(movieId:Int): LiveData<Resource<List<MovieEntity>>> {
+
+    fun getAllMoviesBookmarked(): LiveData<List<MovieEntity>> {
+        val movieResponses = localDataSource.getBookmarkedMovie()
+        return movieResponses
+    }
+
+    override fun getMovieById(movieId: Int): LiveData<Resource<MovieEntity>> {
+        return object : NetworkBoundResource<MovieEntity, List<MovieResponse>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<MovieEntity> =
+                localDataSource.getMovieById(movieId)
+            override fun shouldFetch(data: MovieEntity?): Boolean =
+                data == null
+            public override fun createCall(): LiveData<ApiResponse<List<MovieResponse>>> =
+                remoteDataSource.getMovieById(movieId)
+            override fun saveCallResult(responses: List<MovieResponse>) {
+                val dataList = ArrayList<MovieEntity>()
+                for (response in responses) {
+                    val course = MovieEntity(
+                        response.adult,
+                        response.backdropPath,
+                        response.id,
+                        response.originalLanguage,
+                        response.originalTitle,
+                        response.overview,
+                        response.popularity,
+                        response.posterPath,
+                        response.releaseDate,
+                        response.title,
+                        response.video,
+                        response.voteAverage,
+                        response.voteCount
+                    )
+                    dataList.add(course)
+                }
+
+                localDataSource.insertMovies(dataList)
+            }
+        }.asLiveData()
+    }
+
+    override fun getOthersMovies(movieId: Int?): LiveData<Resource<List<MovieEntity>>> {
         return object : NetworkBoundResource<List<MovieEntity>, List<MovieResponse>>(appExecutors) {
             public override fun loadFromDB(): LiveData<List<MovieEntity>> =
                 localDataSource.getOthersMovies(movieId)
@@ -75,41 +113,6 @@ class AppRepository private constructor(
                     val course = MovieEntity(
                         response.adult,
                         response.backdropPath,
-                        response.genreIds,
-                        response.id,
-                        response.originalLanguage,
-                        response.originalTitle,
-                        response.overview,
-                        response.popularity,
-                        response.posterPath,
-                        response.releaseDate,
-                        response.title,
-                        response.video,
-                        response.voteAverage,
-                        response.voteCount
-                    )
-                    dataList.add(course)
-                }
-
-                localDataSource.insertMovies(dataList)
-            }
-        }.asLiveData()
-    }
-    override fun getMovie(movieId:Int): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, List<MovieResponse>>(appExecutors) {
-            public override fun loadFromDB(): LiveData<List<MovieEntity>> =
-                localDataSource.getMovieById(movieId)
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean =
-                data == null || data.isEmpty()
-            public override fun createCall(): LiveData<ApiResponse<List<MovieResponse>>> =
-                remoteDataSource.getMovie(movieId)
-            public override fun saveCallResult(responses: List<MovieResponse>) {
-                val dataList = ArrayList<MovieEntity>()
-                for (response in responses) {
-                    val course = MovieEntity(
-                        response.adult,
-                        response.backdropPath,
-                        response.genreIds,
                         response.id,
                         response.originalLanguage,
                         response.originalTitle,
@@ -161,7 +164,7 @@ class AppRepository private constructor(
             }
         }.asLiveData()
     }
-    override fun getTvShow(tvShowId: String): LiveData<Resource<List<TvShowEntity>>> {
+    override fun getTvShow(tvShowId: Int): LiveData<Resource<List<TvShowEntity>>> {
         return object : NetworkBoundResource<List<TvShowEntity>, List<TvShowResponse>>(appExecutors) {
             public override fun loadFromDB(): LiveData<List<TvShowEntity>> =
                 localDataSource.getTvShowById(tvShowId.toInt())
@@ -223,4 +226,8 @@ class AppRepository private constructor(
             }
         }.asLiveData()
     }
+
+    override fun getBookmarkedMovie(): LiveData<List<MovieEntity>> = localDataSource.getBookmarkedMovie()
+
+    override fun setMovieBookmark(movie: MovieEntity, state: Boolean) = appExecutors.diskIO().execute { localDataSource.setMovieBookmark(movie, state) }
 }

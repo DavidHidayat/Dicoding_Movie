@@ -14,9 +14,14 @@ class LocalDataSource private constructor(private val mAppDao: AppDao)  {
     }
 
     fun getAllMovies(): LiveData<List<MovieEntity>> = mAppDao.getMovies()
-    fun getOthersMovies(movieId:Int): LiveData<List<MovieEntity>> = mAppDao.getOthersMovies(movieId)
-    fun getMovieById(movieId:Int): LiveData<List<MovieEntity>> = mAppDao.getMovieById(movieId)
+    fun getOthersMovies(movieId: Int?): LiveData<List<MovieEntity>> = mAppDao.getOthersMovies(movieId)
+    fun getMovieById(movieId:Int): LiveData<MovieEntity> = mAppDao.getMovieById(movieId)
     fun insertMovies(movies: List<MovieEntity>) = mAppDao.insertMovies(movies)
+    fun getBookmarkedMovie(): LiveData<List<MovieEntity>> = mAppDao.getBookmarkedMovie()
+    fun setMovieBookmark(movie: MovieEntity, newState: Boolean) {
+        movie.bookmarked = newState
+        mAppDao.updateMovie(movie)
+    }
 
     fun getAllTvShows(): LiveData<List<TvShowEntity>> = mAppDao.getTvShows()
     fun getOthersTvShows(tvShowId:Int): LiveData<List<TvShowEntity>> = mAppDao.getOthersTvShows(tvShowId)

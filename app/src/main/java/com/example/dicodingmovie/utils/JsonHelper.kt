@@ -33,7 +33,6 @@ class JsonHelper(private val context: Context) {
 
                 val adult = movie.getBoolean("adult")
                 val backdrop_path = movie.getString("backdrop_path")
-                val genre_ids_list = movie.getJSONArray("genre_ids")
                 val id = movie.getInt("id")
                 val original_language = movie.getString("original_language")
                 val original_title = movie.getString("original_title")
@@ -46,11 +45,7 @@ class JsonHelper(private val context: Context) {
                 val vote_average = movie.getDouble("vote_average")
                 val vote_count = movie.getInt("vote_count")
 
-                val genre_ids = ArrayList<Int>()
-                for (x in 0 until genre_ids_list.length()) {
-                    genre_ids.add(genre_ids_list.getInt(x))
-                }
-                val movieResponse = MovieResponse(adult, backdrop_path, genre_ids, id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
+                val movieResponse = MovieResponse(adult, backdrop_path, id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
                 list.add(movieResponse)
             }
         } catch (e: JSONException) {
@@ -67,7 +62,6 @@ class JsonHelper(private val context: Context) {
             val responseObject = JSONObject(parsingFileToString(fileName).toString())
             val adult = responseObject.getBoolean("adult")
             val backdrop_path = responseObject.getString("backdrop_path")
-            val genre_ids_list = responseObject.getJSONArray("genre_ids")
             val id = responseObject.getInt("id")
             val original_language = responseObject.getString("original_language")
             val original_title = responseObject.getString("original_title")
@@ -80,11 +74,7 @@ class JsonHelper(private val context: Context) {
             val vote_average = responseObject.getDouble("vote_average")
             val vote_count = responseObject.getInt("vote_count")
 
-            val genre_ids = ArrayList<Int>()
-            for (x in 0 until genre_ids_list.length()) {
-                genre_ids.add(genre_ids_list.getInt(x))
-            }
-            val data = MovieResponse(adult, backdrop_path, genre_ids, id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
+            val data = MovieResponse(adult, backdrop_path,  id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
             list.add(data)
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -92,8 +82,34 @@ class JsonHelper(private val context: Context) {
 
         return list
     }
+    fun loadMovieById(movieId: Int): MovieResponse {
+        val fileName = String.format("Movie_%s.json", movieId)
+        var data : MovieResponse? = null
+        try {
+            val responseObject = JSONObject(parsingFileToString(fileName).toString())
+            val adult = responseObject.getBoolean("adult")
+            val backdrop_path = responseObject.getString("backdrop_path")
+            val id = responseObject.getInt("id")
+            val original_language = responseObject.getString("original_language")
+            val original_title = responseObject.getString("original_title")
+            val overview = responseObject.getString("overview")
+            val popularity = responseObject.getDouble("popularity")
+            val poster_path = responseObject.getString("poster_path")
+            val release_date = responseObject.getString("release_date")
+            val title = responseObject.getString("title")
+            val video = responseObject.getBoolean("video")
+            val vote_average = responseObject.getDouble("vote_average")
+            val vote_count = responseObject.getInt("vote_count")
 
-    fun loadOtherMovies(movieId: Int): List<MovieResponse> {
+            data = MovieResponse(adult, backdrop_path,  id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+        return data!!
+    }
+
+    fun loadOtherMovies(movieId: Int?): List<MovieResponse> {
         val list = ArrayList<MovieResponse>()
         try {
             val responseObject = JSONObject(parsingFileToString("MovieResponse.json").toString())
@@ -105,7 +121,6 @@ class JsonHelper(private val context: Context) {
                 if (movieId != id){
                     val adult = movie.getBoolean("adult")
                     val backdrop_path = movie.getString("backdrop_path")
-                    val genre_ids_list = movie.getJSONArray("genre_ids")
                     val original_language = movie.getString("original_language")
                     val original_title = movie.getString("original_title")
                     val overview = movie.getString("overview")
@@ -117,11 +132,7 @@ class JsonHelper(private val context: Context) {
                     val vote_average = movie.getDouble("vote_average")
                     val vote_count = movie.getInt("vote_count")
 
-                    val genre_ids = ArrayList<Int>()
-                    for (x in 0 until genre_ids_list.length()) {
-                        genre_ids.add(genre_ids_list.getInt(x))
-                    }
-                    val movieResponse = MovieResponse(adult, backdrop_path, genre_ids, id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
+                    val movieResponse = MovieResponse(adult, backdrop_path, id, original_language,original_title,overview,popularity,poster_path,release_date,title, video, vote_average, vote_count)
                     list.add(movieResponse)
 
                 }

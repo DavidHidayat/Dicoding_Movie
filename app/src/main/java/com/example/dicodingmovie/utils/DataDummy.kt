@@ -15,11 +15,6 @@ object DataDummy {
             MovieEntity(
             adult = false,
             backdropPath = "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg",
-            genreIds = arrayListOf(
-                27,
-                9648,
-                53
-            ),
             id = 423108,
             originalLanguage = "en",
             originalTitle = "The Conjuring: The Devil Made Me Do It",
@@ -37,7 +32,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/fPGeS6jgdLovQAKunNHX8l0avCy.jpg",
-            arrayListOf(28,12,53,10752),
             567189,
             "en",
             "Tom Clancy's Without Remorse",
@@ -55,7 +49,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/ouOojiypBE6CD1aqcHPVq7cJf2R.jpg",
-            arrayListOf(53,18,28,9648),
             578701,
             "en",
             "Those Who Wish Me Dead",
@@ -73,7 +66,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/inJjDhCjfhh3RtrJWBmmDqeuSYC.jpg",
-            arrayListOf(878,28,18),
             399566,
             "en",
             "Godzilla vs. Kong",
@@ -91,7 +83,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/lkInRiMtLgl9u9xE0By5hqf66K8.jpg",
-            arrayListOf(27),
             632357,
             "en",
             "The Unholy",
@@ -109,7 +100,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/lHhc60NXYzswU4TvKSo45nY9Jzs.jpg",
-            arrayListOf(16,35,10,10751,12),
             726684,
             "fr",
             "Miraculous World Shanghai, la légende de Ladydragon",
@@ -127,7 +117,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/6zbKgwgaaCyyBXE4Sun4oWQfQmi.jpg",
-            arrayListOf(28,53,80,35),
             615457,
             "en",
             "Nobody",
@@ -145,7 +134,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg",
-            arrayListOf(16,28,12,14,18),
             635302,
             "ja",
             "劇場版「鬼滅の刃」無限列車編",
@@ -163,7 +151,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/7prYzufdIOy1KCTZKVWpjBFqqNr.jpg",
-            arrayListOf(16,12,14,10751,28),
             527774,
             "en",
             "Raya and the Last Dragon",
@@ -181,7 +168,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/5Zv5KmgZzdIvXz2KC3n0MyecSNL.jpg",
-            arrayListOf(28,53,80),
             634528,
             "en",
             "The Marksman",
@@ -199,7 +185,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/mYM8x2Atv4MaLulaV0KVJWI1Djv.jpg",
-            arrayListOf(28,80,53),
             804435,
             "en",
             "Vanquish",
@@ -217,7 +202,6 @@ object DataDummy {
             MovieEntity(
             false,
             "/ovggmAOu1IbPGTQE8lg4lBasNC7.jpg",
-            arrayListOf(878,28,12,53),
             412656,
             "en",
             "Chaos Walking",
@@ -396,7 +380,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/6ELCZlTA5lGUops70hKdB83WJxH.jpg",
-            arrayListOf(28,14,12),
             460465,
             "en",
             "Mortal Kombat",
@@ -412,7 +395,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/fPGeS6jgdLovQAKunNHX8l0avCy.jpg",
-            arrayListOf(28,12,53,10752),
             567189,
             "en",
             "Tom Clancy's Without Remorse",
@@ -428,7 +410,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/ouOojiypBE6CD1aqcHPVq7cJf2R.jpg",
-            arrayListOf(53,18,28,9648),
             578701,
             "en",
             "Those Who Wish Me Dead",
@@ -444,7 +425,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/inJjDhCjfhh3RtrJWBmmDqeuSYC.jpg",
-            arrayListOf(878,28,18),
             399566,
             "en",
             "Godzilla vs. Kong",
@@ -460,7 +440,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/lkInRiMtLgl9u9xE0By5hqf66K8.jpg",
-            arrayListOf(27),
             632357,
             "en",
             "The Unholy",
@@ -476,7 +455,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/lHhc60NXYzswU4TvKSo45nY9Jzs.jpg",
-            arrayListOf(16,35,10,10751,12),
             726684,
             "fr",
             "Miraculous World Shanghai, la légende de Ladydragon",
@@ -492,7 +470,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/6zbKgwgaaCyyBXE4Sun4oWQfQmi.jpg",
-            arrayListOf(28,53,80,35),
             615457,
             "en",
             "Nobody",
@@ -508,7 +485,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg",
-            arrayListOf(16,28,12,14,18),
             635302,
             "ja",
             "劇場版「鬼滅の刃」無限列車編",
@@ -524,7 +500,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/7prYzufdIOy1KCTZKVWpjBFqqNr.jpg",
-            arrayListOf(16,12,14,10751,28),
             527774,
             "en",
             "Raya and the Last Dragon",
@@ -540,7 +515,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/5Zv5KmgZzdIvXz2KC3n0MyecSNL.jpg",
-            arrayListOf(28,53,80),
             634528,
             "en",
             "The Marksman",
@@ -556,7 +530,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/mYM8x2Atv4MaLulaV0KVJWI1Djv.jpg",
-            arrayListOf(28,80,53),
             804435,
             "en",
             "Vanquish",
@@ -572,7 +545,6 @@ object DataDummy {
         movies.add(MovieResponse(
             false,
             "/ovggmAOu1IbPGTQE8lg4lBasNC7.jpg",
-            arrayListOf(878,28,12,53),
             412656,
             "en",
             "Chaos Walking",

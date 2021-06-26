@@ -38,7 +38,7 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
         return resultMovie
     }
 
-    fun getMovie(movieId: Int ) :LiveData<ApiResponse<List<MovieResponse>>> {
+    fun getMovieById(movieId: Int ) :LiveData<ApiResponse<List<MovieResponse>>> {
         EspressoIdlingResource.increment()
         val resultMovie = MutableLiveData<ApiResponse<List<MovieResponse>>>()
         handler.postDelayed(
@@ -51,7 +51,7 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
         return resultMovie
     }
 
-    fun getOtherMovies(movieId: Int): LiveData<ApiResponse<List<MovieResponse>>> {
+    fun getOtherMovies(movieId: Int?): LiveData<ApiResponse<List<MovieResponse>>> {
         EspressoIdlingResource.increment()
         val resultMovie = MutableLiveData<ApiResponse<List<MovieResponse>>>()
         handler.postDelayed(

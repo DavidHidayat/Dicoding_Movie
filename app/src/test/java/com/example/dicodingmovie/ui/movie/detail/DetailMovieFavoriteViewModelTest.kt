@@ -18,8 +18,8 @@ import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class DetailMovieViewModelTest {
-    private lateinit var viewModel: DetailMovieViewModel
+class DetailMovieFavoriteViewModelTest {
+    private lateinit var viewModel: DetailMovieFavoriteViewModel
     private val dummyMovie = DataDummy.generateDummyMovies()[0]
     private val movieId = dummyMovie.id
 
@@ -37,7 +37,7 @@ class DetailMovieViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = DetailMovieViewModel(appRepository)
+        viewModel = DetailMovieFavoriteViewModel(appRepository)
         viewModel.setSelectedMovie(movieId)
     }
 

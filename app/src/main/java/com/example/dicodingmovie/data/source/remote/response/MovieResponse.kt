@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class MovieResponse(
     var adult: Boolean,
     var backdropPath: String?,
-    var genreIds: ArrayList<Int>,
     var id: Int,
     var originalLanguage: String,
     var originalTitle: String,

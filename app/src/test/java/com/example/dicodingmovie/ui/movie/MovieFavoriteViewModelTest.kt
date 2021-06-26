@@ -18,8 +18,8 @@ import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class MovieViewModelTest  {
-    private lateinit var viewModel: MovieViewModel
+class MovieFavoriteViewModelTest  {
+    private lateinit var viewModel: MovieFavoriteViewModel
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -32,7 +32,7 @@ class MovieViewModelTest  {
 
     @Before
     fun setUp() {
-        viewModel = MovieViewModel(appRepository)
+        viewModel = MovieFavoriteViewModel(appRepository)
     }
 
     @Test

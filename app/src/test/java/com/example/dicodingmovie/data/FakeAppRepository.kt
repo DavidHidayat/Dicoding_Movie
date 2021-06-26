@@ -65,7 +65,7 @@ class FakeAppRepository (private val remoteDataSource: RemoteDataSource) : AppDa
         })
         return movieResults
     }
-    override fun getOthersMovies(movieId:Int): LiveData<List<MovieEntity>> {
+    override fun getOthersMovies(movieId: Int?): LiveData<List<MovieEntity>> {
         val movieResults = MutableLiveData<List<MovieEntity>>()
         remoteDataSource.getOtherMovies(movieId,object :RemoteDataSource.LoadOthersMoviesCallback{
             override fun onOthersMoviesReceived(movieResponses: List<MovieResponse>) {

@@ -13,9 +13,6 @@ data class MovieEntity(
     @ColumnInfo(name = "backdropPath")
     var backdropPath: String?,
 
-    @ColumnInfo(name = "genreIds")
-    var genreIds: ArrayList<Int>,
-
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
@@ -49,5 +46,8 @@ data class MovieEntity(
     var voteAverage: Double,
 
     @ColumnInfo(name = "voteCount")
-    var voteCount: Int
+    var voteCount: Int,
+
+    @ColumnInfo(name = "bookmarked")
+    var bookmarked: Boolean = false,
 )
