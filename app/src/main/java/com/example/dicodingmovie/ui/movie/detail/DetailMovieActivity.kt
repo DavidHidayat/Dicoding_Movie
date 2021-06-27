@@ -76,6 +76,7 @@ class DetailMovieActivity : AppCompatActivity() {
                     }
                 })
                 viewModel.getOthersMovies.observe(this, { movies ->
+                    Log.e("INIININNI",movies.toString())
                     if (movies != null) {
                         when (movies.status) {
                             Status.LOADING -> detailContentBinding?.progressBar?.visibility =

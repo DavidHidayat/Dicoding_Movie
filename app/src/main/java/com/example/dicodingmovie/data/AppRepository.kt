@@ -112,7 +112,7 @@ class AppRepository private constructor(
     }
 
 
-    override fun getOthersMovies(movieId: Int?): LiveData<Resource<List<MovieEntity>>> {
+    override fun getOthersMovies(movieId: Int): LiveData<Resource<List<MovieEntity>>> {
         return object : NetworkBoundResource<List<MovieEntity>, List<MovieResponse>>(appExecutors) {
             public override fun loadFromDB(): LiveData<List<MovieEntity>> =
                 localDataSource.getOthersMovies(movieId)

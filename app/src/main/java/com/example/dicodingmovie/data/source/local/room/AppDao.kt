@@ -12,7 +12,7 @@ interface AppDao {
     fun getMovies():LiveData<List<MovieEntity>>
 
     @Query("SELECT * FROM movieentities WHERE id != :movieId")
-    fun getOthersMovies(movieId: Int?):LiveData<List<MovieEntity>>
+    fun getOthersMovies(movieId: Int):LiveData<List<MovieEntity>>
 
     @Query("SELECT * FROM movieentities WHERE id = :movieId")
     fun getMovieById(movieId:Int):LiveData<MovieEntity>

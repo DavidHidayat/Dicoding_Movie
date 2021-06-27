@@ -27,7 +27,9 @@ class DetailMovieViewModel(private val appRepository: AppRepository) : ViewModel
         }
 
     var getOthersMovies: LiveData<Resource<List<MovieEntity>>> =
-        appRepository.getOthersMovies(movieId.value)
+        Transformations.switchMap(movieId) { mMovieId ->
+            appRepository.getOthersMovies(mMovieId)
+        }
 
     fun setFavorite() {
         val movie = movieById.value

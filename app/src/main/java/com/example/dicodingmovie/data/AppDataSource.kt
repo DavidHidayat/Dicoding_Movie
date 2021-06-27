@@ -11,7 +11,7 @@ interface AppDataSource {
     fun getAllMovies(): LiveData<Resource<List<MovieEntity>>>
     fun getMovieById(movieId: Int): LiveData<Resource<MovieEntity>>
 
-    fun getOthersMovies(movieId: Int?): LiveData<Resource<List<MovieEntity>>>
+    fun getOthersMovies(movieId: Int): LiveData<Resource<List<MovieEntity>>>
     fun getAllTvShows(): LiveData<Resource<List<TvShowEntity>>>
     fun getTvShow(tvShowId: Int): LiveData<Resource<List<TvShowEntity>>>
     fun getOthersTvShows(tvShowId: Int): LiveData<Resource<List<TvShowEntity>>>
