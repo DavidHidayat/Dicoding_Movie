@@ -1,6 +1,7 @@
 package com.example.dicodingmovie.data.source.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
@@ -9,7 +10,7 @@ import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
 @Dao
 interface AppDao {
     @Query("SELECT * FROM movieentities")
-    fun getMovies():LiveData<List<MovieEntity>>
+    fun getMovies(): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM movieentities WHERE id != :movieId")
     fun getOthersMovies(movieId: Int):LiveData<List<MovieEntity>>
@@ -21,7 +22,7 @@ interface AppDao {
     fun insertMovies(movies: List<MovieEntity>)
 
     @Query("SELECT * FROM moviefaventites")
-    fun getFavoritedMovie():LiveData<List<MovieFavoriteEntity>>
+    fun getFavoritedMovie():DataSource.Factory<Int, MovieFavoriteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMoviesFavorite(movies: List<MovieFavoriteEntity>)

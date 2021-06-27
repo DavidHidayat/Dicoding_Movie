@@ -1,6 +1,7 @@
 package com.example.dicodingmovie.data.source.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
 import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
@@ -14,12 +15,12 @@ class LocalDataSource private constructor(private val mAppDao: AppDao)  {
             INSTANCE ?: LocalDataSource(appDao)
     }
 
-    fun getAllMovies(): LiveData<List<MovieEntity>> = mAppDao.getMovies()
+    fun getAllMovies(): DataSource.Factory<Int, MovieEntity> = mAppDao.getMovies()
     fun getOthersMovies(movieId: Int): LiveData<List<MovieEntity>> = mAppDao.getOthersMovies(movieId)
     fun getMovieById(movieId:Int): LiveData<MovieEntity> = mAppDao.getMovieById(movieId)
     fun insertMovies(movies: List<MovieEntity>) = mAppDao.insertMovies(movies)
 
-    fun getFavoritedMovie(): LiveData<List<MovieFavoriteEntity>> = mAppDao.getFavoritedMovie()
+    fun getFavoritedMovie(): DataSource.Factory<Int, MovieFavoriteEntity> = mAppDao.getFavoritedMovie()
     fun getMovieFavoriteById(movieId:Int): LiveData<MovieFavoriteEntity> = mAppDao.getMovieFavoriteById(movieId)
     fun insertMovieFavorite(movies: List<MovieFavoriteEntity>) = mAppDao.insertMoviesFavorite(movies)
     fun deleteMovieFavorite(movieId:Int) = mAppDao.deleteMoviesFavorite(movieId)

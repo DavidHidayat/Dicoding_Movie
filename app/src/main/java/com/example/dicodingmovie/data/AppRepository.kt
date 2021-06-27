@@ -2,6 +2,8 @@ package com.example.dicodingmovie.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.example.dicodingmovie.data.source.local.LocalDataSource
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
@@ -35,12 +37,18 @@ class AppRepository private constructor(
             }
     }
 
-    override fun getAllMovies(): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, List<MovieResponse>>(appExecutors) {
-            public override fun loadFromDB(): LiveData<List<MovieEntity>> =
-                localDataSource.getAllMovies()
+    override fun getAllMovies(): LiveData<Resource<PagedList<MovieEntity>>> {
+        return object : NetworkBoundResource<PagedList<MovieEntity>, List<MovieResponse>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localDataSource.getAllMovies(), config).build()
+            }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean =
+            override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean =
                 data == null || data.isEmpty()
 
             public override fun createCall(): LiveData<ApiResponse<List<MovieResponse>>> =
@@ -64,8 +72,6 @@ class AppRepository private constructor(
                         response.voteAverage,
                         response.voteCount
                     )
-                    Log.e("Coba", movie.toString())
-
                     dataList.add(movie)
                 }
 
@@ -257,8 +263,14 @@ class AppRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getFavoritedMovie(): LiveData<List<MovieFavoriteEntity>> =
-        localDataSource.getFavoritedMovie()
+    override fun getFavoritedMovie(): LiveData<PagedList<MovieFavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getFavoritedMovie(), config).build()
+    }
 
     override fun getMovieFavoriteById(movieId: Int): LiveData<MovieFavoriteEntity> =
         localDataSource.getMovieFavoriteById(movieId)

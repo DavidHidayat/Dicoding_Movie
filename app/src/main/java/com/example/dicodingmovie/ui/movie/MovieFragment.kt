@@ -1,6 +1,7 @@
 package com.example.dicodingmovie.ui.movie
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,11 +29,12 @@ class MovieFragment : Fragment() {
             val movieAdapter = MovieAdapter()
             viewModel.getMovies().observe(requireActivity(), { movies ->
                 if (movies != null) {
+                    Log.e("Movies",movies.toString())
                     when (movies.status) {
                         Status.LOADING -> fragmentMovieBinding?.progressBar?.visibility = View.VISIBLE
                         Status.SUCCESS -> {
                             fragmentMovieBinding?.progressBar?.visibility = View.GONE
-                            movieAdapter.setMovies(movies.data)
+                            movieAdapter.submitList(movies.data)
                             movieAdapter.notifyDataSetChanged()
                         }
                         Status.ERROR -> {
