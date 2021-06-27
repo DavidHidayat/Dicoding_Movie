@@ -1,4 +1,4 @@
-package com.example.dicodingmovie.ui.movie.detail
+package com.example.dicodingmovie.ui.moviefavorite.detail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -10,7 +10,7 @@ import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
 import com.example.dicodingmovie.vo.Resource
 
-class DetailMovieViewModel(private val appRepository: AppRepository) : ViewModel() {
+class DetailMovieFavoriteViewModel(private val appRepository: AppRepository) : ViewModel() {
     private var movieId = MutableLiveData<Int>()
 
     fun setSelectedMovie(movieId: Int) {
@@ -26,9 +26,6 @@ class DetailMovieViewModel(private val appRepository: AppRepository) : ViewModel
             appRepository.getMovieFavoriteById(mMovieId)
         }
 
-    var getOthersMovies: LiveData<Resource<List<MovieEntity>>> =
-        appRepository.getOthersMovies(movieId.value)
-
     fun setFavorite() {
         val movie = movieById.value
         val movieFavorite = movieFavoriteById.value
@@ -40,9 +37,19 @@ class DetailMovieViewModel(private val appRepository: AppRepository) : ViewModel
                 if (movie.data != null) {
                     Log.e("Favorite insert", movie.data.id.toString())
                     appRepository.insertMovieFavorite(movie.data)
-
                 }
             }
         }
     }
+
+    var setNextPage: LiveData<MovieFavoriteEntity> =
+        Transformations.switchMap(movieId) { mMovieId ->
+            appRepository.nextMovieFavorite(mMovieId)
+        }
+
+    var setPrevPage: LiveData<MovieFavoriteEntity> =
+        Transformations.switchMap(movieId) { mMovieId ->
+            appRepository.prevMovieFavorite(mMovieId)
+        }
+
 }

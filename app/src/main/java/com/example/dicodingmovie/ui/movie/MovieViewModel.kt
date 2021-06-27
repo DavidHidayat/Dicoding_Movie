@@ -8,5 +8,4 @@ import com.example.dicodingmovie.vo.Resource
 
 class MovieViewModel(private val appRepository: AppRepository): ViewModel() {
     fun getMovies(): LiveData<Resource<List<MovieEntity>>> = appRepository.getAllMovies()
-
 }

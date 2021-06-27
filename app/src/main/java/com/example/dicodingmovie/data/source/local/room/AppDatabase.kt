@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
+import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
 import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
 
-@Database(entities = [MovieEntity::class, TvShowEntity::class],
+@Database(entities = [MovieEntity::class, TvShowEntity::class, MovieFavoriteEntity::class],
     version = 1,
     exportSchema = false)
 abstract class AppDatabase : RoomDatabase(){

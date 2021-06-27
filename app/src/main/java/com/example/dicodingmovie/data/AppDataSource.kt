@@ -2,6 +2,7 @@ package com.example.dicodingmovie.data
 
 import androidx.lifecycle.LiveData
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
+import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
 import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
 import com.example.dicodingmovie.vo.Resource
 
@@ -15,7 +16,8 @@ interface AppDataSource {
     fun getTvShow(tvShowId: Int): LiveData<Resource<List<TvShowEntity>>>
     fun getOthersTvShows(tvShowId: Int): LiveData<Resource<List<TvShowEntity>>>
 
-    fun getBookmarkedMovie(): LiveData<List<MovieEntity>>
-    fun setMovieBookmark(movie: MovieEntity, state: Boolean)
-
+    fun getFavoritedMovie(): LiveData<List<MovieFavoriteEntity>>
+    fun getMovieFavoriteById(movieId: Int): LiveData<MovieFavoriteEntity>
+    fun insertMovieFavorite(movie: MovieEntity)
+    fun deleteMovieFavorite(movieId: Int)
 }

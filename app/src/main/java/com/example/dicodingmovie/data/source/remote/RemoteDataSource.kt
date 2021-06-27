@@ -38,12 +38,12 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
         return resultMovie
     }
 
-    fun getMovieById(movieId: Int ) :LiveData<ApiResponse<List<MovieResponse>>> {
+    fun getMovieById(movieId: Int ) :LiveData<ApiResponse<MovieResponse>> {
         EspressoIdlingResource.increment()
-        val resultMovie = MutableLiveData<ApiResponse<List<MovieResponse>>>()
+        val resultMovie = MutableLiveData<ApiResponse<MovieResponse>>()
         handler.postDelayed(
             {
-                resultMovie.value = ApiResponse.success(jsonHelper.loadMovie(movieId))
+                resultMovie.value = ApiResponse.success(jsonHelper.loadMovieById(movieId))
                 EspressoIdlingResource.decrement()
             },
             SERVICE_LATENCY_IN_MILLIS

@@ -7,6 +7,8 @@ import com.example.dicodingmovie.data.AppRepository
 import com.example.dicodingmovie.di.Injection
 import com.example.dicodingmovie.ui.movie.MovieViewModel
 import com.example.dicodingmovie.ui.movie.detail.DetailMovieViewModel
+import com.example.dicodingmovie.ui.moviefavorite.MovieFavoriteViewModel
+import com.example.dicodingmovie.ui.moviefavorite.detail.DetailMovieFavoriteViewModel
 import com.example.dicodingmovie.ui.tvshow.TvShowViewModel
 import com.example.dicodingmovie.ui.tvshow.detail.DetailTvShowViewModel
 
@@ -33,11 +35,11 @@ class ViewModelFactory private constructor(private val mAppRepository: AppReposi
             modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
                 DetailMovieViewModel(mAppRepository) as T
             }
-            modelClass.isAssignableFrom(MovieViewModel::class.java) -> {
-                MovieViewModel(mAppRepository) as T
+            modelClass.isAssignableFrom(MovieFavoriteViewModel::class.java) -> {
+                MovieFavoriteViewModel(mAppRepository) as T
             }
-            modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
-                DetailMovieViewModel(mAppRepository) as T
+            modelClass.isAssignableFrom(DetailMovieFavoriteViewModel::class.java) -> {
+                DetailMovieFavoriteViewModel(mAppRepository) as T
             }
             modelClass.isAssignableFrom(TvShowViewModel::class.java) -> {
                 TvShowViewModel(mAppRepository) as T

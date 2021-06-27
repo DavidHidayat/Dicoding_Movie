@@ -1,6 +1,7 @@
 package com.example.dicodingmovie.ui.movie.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -57,14 +58,19 @@ class DetailMovieActivity : AppCompatActivity() {
                 viewModel.movieById.observe(this, { movies ->
                     if (movies != null) {
                         when (movies.status) {
-                            Status.LOADING -> detailContentBinding?.progressBar?.visibility = View.VISIBLE
+                            Status.LOADING -> detailContentBinding?.progressBar?.visibility =
+                                View.VISIBLE
                             Status.SUCCESS -> if (movies.data != null) {
                                 detailContentBinding?.progressBar?.visibility = View.GONE
                                 populateMovie(movies.data)
                             }
                             Status.ERROR -> {
                                 detailContentBinding?.progressBar?.visibility = View.GONE
-                                Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Terjadi kesalahan",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -72,7 +78,8 @@ class DetailMovieActivity : AppCompatActivity() {
                 viewModel.getOthersMovies.observe(this, { movies ->
                     if (movies != null) {
                         when (movies.status) {
-                            Status.LOADING -> detailContentBinding?.progressBar?.visibility = View.VISIBLE
+                            Status.LOADING -> detailContentBinding?.progressBar?.visibility =
+                                View.VISIBLE
                             Status.SUCCESS -> if (movies.data != null) {
                                 detailContentBinding?.progressBar?.visibility = View.GONE
                                 adapter.setMovies(movies.data)
@@ -80,7 +87,11 @@ class DetailMovieActivity : AppCompatActivity() {
                             }
                             Status.ERROR -> {
                                 detailContentBinding?.progressBar?.visibility = View.GONE
-                                Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Terjadi kesalahan",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -98,7 +109,8 @@ class DetailMovieActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@DetailMovieActivity)
             setHasFixedSize(true)
             this?.adapter = adapter
-            val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+            val dividerItemDecoration =
+                DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
         }
 
@@ -110,42 +122,37 @@ class DetailMovieActivity : AppCompatActivity() {
         detailContentBinding.tvReleaseDate.text = movieEntity.releaseDate
 
         Glide.with(this)
-            .load(resources.getString(R.string.image_base_url,movieEntity.posterPath))
+            .load(resources.getString(R.string.image_base_url, movieEntity.posterPath))
             .transform(RoundedCorners(20))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
-                .error(R.drawable.ic_error))
+                    .error(R.drawable.ic_error)
+            )
             .into(detailContentBinding.imagePoster)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_detail, menu)
         this.menu = menu
-        viewModel.movieById.observe(this, { movie ->
+        viewModel.movieFavoriteById.observe(this, { movie ->
+            var state: Boolean = false
             if (movie != null) {
-                when (movie.status) {
-                    Status.LOADING -> detailContentBinding.progressBar.visibility = View.VISIBLE
-                    Status.SUCCESS -> if (movie.data != null) {
-                        detailContentBinding.progressBar.visibility = View.GONE
-                        val state = movie.data.bookmarked
-                        setBookmarkState(state)
-                    }
-                    Status.ERROR -> {
-                        detailContentBinding.progressBar.visibility = View.GONE
-                        Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                state = true
             }
+            Log.e("Set Bookmark", state.toString())
+            setBookmarkState(state)
         })
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_bookmark) {
-            viewModel.setBookmark()
+            viewModel.setFavorite()
             return true
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun setBookmarkState(state: Boolean) {
         if (menu == null) return
         val menuItem = menu?.findItem(R.id.action_bookmark)

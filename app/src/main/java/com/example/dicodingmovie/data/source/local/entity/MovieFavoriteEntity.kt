@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "movieentities")
-data class MovieEntity(
+@Entity(tableName = "moviefaventites")
+data class MovieFavoriteEntity(
     @ColumnInfo(name = "adult")
     var adult: Boolean,
 
@@ -46,6 +46,8 @@ data class MovieEntity(
     var voteAverage: Double,
 
     @ColumnInfo(name = "voteCount")
-    var voteCount: Int
+    var voteCount: Int,
 
+    @ColumnInfo(name = "bookmarked")
+    var bookmarked: Boolean = false
     )
