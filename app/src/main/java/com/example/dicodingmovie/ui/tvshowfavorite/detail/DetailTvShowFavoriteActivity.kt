@@ -1,8 +1,7 @@
-package com.example.dicodingmovie.ui.moviefavorite.detail
+package com.example.dicodingmovie.ui.tvshowfavorite.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,31 +13,26 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.dicodingmovie.R
-import com.example.dicodingmovie.data.source.local.entity.MovieEntity
-import com.example.dicodingmovie.databinding.ActivityDetailMovieFavoriteBinding
-import com.example.dicodingmovie.databinding.ContentDetailMovieFavoriteBinding
+import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
+import com.example.dicodingmovie.databinding.ActivityDetailTvShowFavoriteBinding
+import com.example.dicodingmovie.databinding.ContentDetailTvShowFavoriteBinding
 import com.example.dicodingmovie.viewmodel.ViewModelFactory
 import com.example.dicodingmovie.vo.Status
 
-class DetailMovieFavoriteActivity : AppCompatActivity() {
+class DetailTvShowFavoriteActivity : AppCompatActivity() {
 
 
-    private lateinit var activity: ActivityDetailMovieFavoriteBinding
-    private lateinit var content: ContentDetailMovieFavoriteBinding
+    private lateinit var activity: ActivityDetailTvShowFavoriteBinding
+    private lateinit var content: ContentDetailTvShowFavoriteBinding
 
-    private lateinit var viewModel: DetailMovieFavoriteViewModel
+    private lateinit var viewModel: DetailTvShowFavoriteViewModel
     private var menu: Menu? = null
-
-    companion object {
-        const val MOVIE_ID = "movie_id"
-        const val MOVIE_TITLE = "movie_title"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activity = ActivityDetailMovieFavoriteBinding.inflate(layoutInflater)
-        content = activity.detailMovieFavorite
+        activity = ActivityDetailTvShowFavoriteBinding.inflate(layoutInflater)
+        content = activity.detailTvShowFavorite
 
         setContentView(activity.root)
 
@@ -47,20 +41,20 @@ class DetailMovieFavoriteActivity : AppCompatActivity() {
         val actionBar = supportActionBar
 
         val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory)[DetailMovieFavoriteViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[DetailTvShowFavoriteViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
-            val movieId = extras.getInt(MOVIE_ID)
-            if (movieId != null) {
-                viewModel.setSelectedMovie(movieId)
-                viewModel.movieById.observe(this, { movies ->
-                    if (movies != null) {
-                        when (movies.status) {
+            val tvShowId = extras.getInt(TV_SHOW_ID)
+            if (tvShowId != null) {
+                viewModel.setSelectedTvShow(tvShowId)
+                viewModel.tvShowById.observe(this, { tvShows ->
+                    if (tvShows != null) {
+                        when (tvShows.status) {
                             Status.LOADING -> content?.progressBar?.visibility = View.VISIBLE
-                            Status.SUCCESS -> if (movies.data != null) {
+                            Status.SUCCESS -> if (tvShows.data != null) {
                                 content?.progressBar?.visibility = View.GONE
-                                populateMovie(movies.data)
+                                populateTvShow(tvShows.data)
                                 setButtonNextPrevState()
                             }
                             Status.ERROR -> {
@@ -70,23 +64,23 @@ class DetailMovieFavoriteActivity : AppCompatActivity() {
                         }
                     }
                     content?.btnNext?.setOnClickListener {
-                        viewModel.setNextPage.observe(this, { movie ->
+                        viewModel.setNextPage.observe(this, { tvShow ->
                             var state: Boolean = false
-                            if (movie != null) {
-                                val intent = Intent(this, DetailMovieFavoriteActivity::class.java)
-                                intent.putExtra(DetailMovieFavoriteActivity.MOVIE_ID, movie.id)
-                                intent.putExtra(DetailMovieFavoriteActivity.MOVIE_TITLE, movie.title)
+                            if (tvShow != null) {
+                                val intent = Intent(this, DetailTvShowFavoriteActivity::class.java)
+                                intent.putExtra(DetailTvShowFavoriteActivity.TV_SHOW_ID, tvShow.id)
+                                intent.putExtra(DetailTvShowFavoriteActivity.TV_SHOW_TITLE, tvShow.name)
                                 this.startActivity(intent)
                             }
                         })
                     }
                     content?.btnPrev?.setOnClickListener {
-                        viewModel.setPrevPage.observe(this, { movie ->
+                        viewModel.setPrevPage.observe(this, { tvShow ->
                             var state: Boolean = false
-                            if (movie != null) {
-                                val intent = Intent(this, DetailMovieFavoriteActivity::class.java)
-                                intent.putExtra(DetailMovieFavoriteActivity.MOVIE_ID, movie.id)
-                                intent.putExtra(DetailMovieFavoriteActivity.MOVIE_TITLE, movie.title)
+                            if (tvShow != null) {
+                                val intent = Intent(this, DetailTvShowFavoriteActivity::class.java)
+                                intent.putExtra(DetailTvShowFavoriteActivity.TV_SHOW_ID, tvShow.id)
+                                intent.putExtra(DetailTvShowFavoriteActivity.TV_SHOW_TITLE, tvShow.name)
                                 this.startActivity(intent)
                             }
                         })
@@ -95,20 +89,20 @@ class DetailMovieFavoriteActivity : AppCompatActivity() {
                 })
             }
 
-            val movieTitle = extras.getString(MOVIE_TITLE)
-            if (movieTitle != null) {
-                actionBar?.title = movieTitle
+            val tvShowTitle = extras.getString(TV_SHOW_TITLE)
+            if (tvShowTitle != null) {
+                actionBar?.title = tvShowTitle
             }
         }
     }
 
-    private fun populateMovie(movieEntity: MovieEntity) {
-        content.tvTitle.text = movieEntity.title
-        content.tvOverview.text = movieEntity.overview
-        content.tvReleaseDate.text = movieEntity.releaseDate
+    private fun populateTvShow(tvShowEntity: TvShowEntity) {
+        content.tvTitle.text = tvShowEntity.name
+        content.tvOverview.text = tvShowEntity.overview
+        content.tvFirstAirDate.text = tvShowEntity.firstAirDate
 
         Glide.with(this)
-            .load(resources.getString(R.string.image_base_url,movieEntity.posterPath))
+            .load(resources.getString(R.string.image_base_url,tvShowEntity.posterPath))
             .transform(RoundedCorners(20))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
@@ -119,9 +113,9 @@ class DetailMovieFavoriteActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_detail, menu)
         this.menu = menu
-        viewModel.movieFavoriteById.observe(this, { movie ->
+        viewModel.tvShowFavoriteById.observe(this, { tvShow ->
             var state: Boolean = false
-            if (movie != null) {
+            if (tvShow != null) {
                 state = true
             }
             setfavoritState(state)
@@ -147,15 +141,15 @@ class DetailMovieFavoriteActivity : AppCompatActivity() {
 
     private fun setButtonNextPrevState() {
         if (activity != null) {
-            viewModel.setNextPage.observe(this, { movie ->
-                if (movie != null) {
+            viewModel.setNextPage.observe(this, { tvShow ->
+                if (tvShow != null) {
                     content?.btnNext?.isEnabled = true
                 }else{
                     content?.btnNext?.isEnabled = false
                 }
             })
-            viewModel.setPrevPage.observe(this, { movie ->
-                if (movie != null) {
+            viewModel.setPrevPage.observe(this, { tvShow ->
+                if (tvShow != null) {
                     content?.btnPrev?.isEnabled = true
                 }else{
                     content?.btnPrev?.isEnabled = false
@@ -164,4 +158,10 @@ class DetailMovieFavoriteActivity : AppCompatActivity() {
 
         }
     }
+
+    companion object {
+        const val TV_SHOW_ID = "tv_show_id"
+        const val TV_SHOW_TITLE = "tv_show_title"
+    }
+
 }

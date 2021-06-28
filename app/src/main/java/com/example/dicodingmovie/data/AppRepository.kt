@@ -8,6 +8,7 @@ import com.example.dicodingmovie.data.source.local.LocalDataSource
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
 import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
+import com.example.dicodingmovie.data.source.local.entity.TvShowFavoriteEntity
 import com.example.dicodingmovie.data.source.remote.ApiResponse
 import com.example.dicodingmovie.data.source.remote.RemoteDataSource
 import com.example.dicodingmovie.data.source.remote.response.MovieResponse
@@ -117,13 +118,21 @@ class AppRepository private constructor(
         }.asLiveData()
     }
 
+    override fun getOthersMovies(movieId: Int): LiveData<Resource<PagedList<MovieEntity>>> {
+        return object : NetworkBoundResource<PagedList<MovieEntity>, List<MovieResponse>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(
+                    localDataSource.getOthersMovies(movieId),
+                    config
+                ).build()
+            }
 
-    override fun getOthersMovies(movieId: Int): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, List<MovieResponse>>(appExecutors) {
-            public override fun loadFromDB(): LiveData<List<MovieEntity>> =
-                localDataSource.getOthersMovies(movieId)
-
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean =
+            override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean =
                 data == null || data.isEmpty()
 
             public override fun createCall(): LiveData<ApiResponse<List<MovieResponse>>> =
@@ -155,13 +164,18 @@ class AppRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getAllTvShows(): LiveData<Resource<List<TvShowEntity>>> {
-        return object :
-            NetworkBoundResource<List<TvShowEntity>, List<TvShowResponse>>(appExecutors) {
-            public override fun loadFromDB(): LiveData<List<TvShowEntity>> =
-                localDataSource.getAllTvShows()
+    override fun getAllTvShows(): LiveData<Resource<PagedList<TvShowEntity>>> {
+        return object : NetworkBoundResource<PagedList<TvShowEntity>, List<TvShowResponse>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<TvShowEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localDataSource.getAllTvShows(), config).build()
+            }
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean =
+            override fun shouldFetch(data: PagedList<TvShowEntity>?): Boolean =
                 data == null || data.isEmpty()
 
             public override fun createCall(): LiveData<ApiResponse<List<TvShowResponse>>> =
@@ -170,7 +184,7 @@ class AppRepository private constructor(
             public override fun saveCallResult(responses: List<TvShowResponse>) {
                 val dataList = ArrayList<TvShowEntity>()
                 for (response in responses) {
-                    val course = TvShowEntity(
+                    val tvShow = TvShowEntity(
                         response.backdropPath,
                         response.firstAirDate,
                         response.id,
@@ -183,7 +197,7 @@ class AppRepository private constructor(
                         response.voteAverage,
                         response.voteCount
                     )
-                    dataList.add(course)
+                    dataList.add(tvShow)
                 }
 
                 localDataSource.insertTvShows(dataList)
@@ -191,22 +205,21 @@ class AppRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getTvShow(tvShowId: Int): LiveData<Resource<List<TvShowEntity>>> {
-        return object :
-            NetworkBoundResource<List<TvShowEntity>, List<TvShowResponse>>(appExecutors) {
-            public override fun loadFromDB(): LiveData<List<TvShowEntity>> =
-                localDataSource.getTvShowById(tvShowId.toInt())
+    override fun getTvShowById(tvShowId: Int): LiveData<Resource<TvShowEntity>> {
+        return object : NetworkBoundResource<TvShowEntity, TvShowResponse>(appExecutors) {
+            public override fun loadFromDB(): LiveData<TvShowEntity> =
+                localDataSource.getTvShowById(tvShowId)
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean =
-                data == null || data.isEmpty()
+            override fun shouldFetch(data: TvShowEntity?): Boolean =
+                data == null
 
-            public override fun createCall(): LiveData<ApiResponse<List<TvShowResponse>>> =
-                remoteDataSource.getTvShow(tvShowId.toInt())
+            public override fun createCall(): LiveData<ApiResponse<TvShowResponse>> =
+                remoteDataSource.getTvShowById(tvShowId)
 
-            public override fun saveCallResult(responses: List<TvShowResponse>) {
+            public override fun saveCallResult(response: TvShowResponse) {
                 val dataList = ArrayList<TvShowEntity>()
-                for (response in responses) {
-                    val course = TvShowEntity(
+                if (response != null) {
+                    val tTvShow = TvShowEntity(
                         response.backdropPath,
                         response.firstAirDate,
                         response.id,
@@ -219,7 +232,7 @@ class AppRepository private constructor(
                         response.voteAverage,
                         response.voteCount
                     )
-                    dataList.add(course)
+                    dataList.add(tTvShow)
                 }
 
                 localDataSource.insertTvShows(dataList)
@@ -227,13 +240,18 @@ class AppRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getOthersTvShows(tvShowId: Int): LiveData<Resource<List<TvShowEntity>>> {
-        return object :
-            NetworkBoundResource<List<TvShowEntity>, List<TvShowResponse>>(appExecutors) {
-            public override fun loadFromDB(): LiveData<List<TvShowEntity>> =
-                localDataSource.getOthersTvShows(tvShowId)
+    override fun getOthersTvShows(tvShowId: Int): LiveData<Resource<PagedList<TvShowEntity>>> {
+        return object : NetworkBoundResource<PagedList<TvShowEntity>, List<TvShowResponse>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<TvShowEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localDataSource.getOthersTvShows(tvShowId), config).build()
+            }
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean =
+            override fun shouldFetch(data: PagedList<TvShowEntity>?): Boolean =
                 data == null || data.isEmpty()
 
             public override fun createCall(): LiveData<ApiResponse<List<TvShowResponse>>> =
@@ -242,7 +260,7 @@ class AppRepository private constructor(
             public override fun saveCallResult(responses: List<TvShowResponse>) {
                 val dataList = ArrayList<TvShowEntity>()
                 for (response in responses) {
-                    val course = TvShowEntity(
+                    val tvShow = TvShowEntity(
                         response.backdropPath,
                         response.firstAirDate,
                         response.id,
@@ -255,7 +273,7 @@ class AppRepository private constructor(
                         response.voteAverage,
                         response.voteCount
                     )
-                    dataList.add(course)
+                    dataList.add(tvShow)
                 }
 
                 localDataSource.insertTvShows(dataList)
@@ -304,5 +322,45 @@ class AppRepository private constructor(
 
     fun nextMovieFavorite(movieId: Int): LiveData<MovieFavoriteEntity> = localDataSource.nextMovieFavorite(movieId)
     fun prevMovieFavorite(movieId: Int): LiveData<MovieFavoriteEntity> = localDataSource.prevMovieFavorite(movieId)
+
+    override fun getFavoritedTvShow(): LiveData<PagedList<TvShowFavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getFavoritedTvShow(), config).build()
+    }
+
+    override fun getTvShowFavoriteById(tvShowId: Int): LiveData<TvShowFavoriteEntity> =
+        localDataSource.getTvShowFavoriteById(tvShowId)
+
+    override fun insertTvShowFavorite(tvShow: TvShowEntity) = appExecutors.diskIO().execute {
+        val dataList = ArrayList<TvShowFavoriteEntity>()
+        val tvShowData = TvShowFavoriteEntity(
+            tvShow.backdropPath,
+            tvShow.firstAirDate,
+            tvShow.id,
+            tvShow.name,
+            tvShow.originalLanguage,
+            tvShow.originalName,
+            tvShow.overview,
+            tvShow.popularity,
+            tvShow.posterPath,
+            tvShow.voteAverage,
+            tvShow.voteCount
+        )
+        dataList.add(tvShowData)
+        localDataSource.insertTvShowFavorite(dataList)
+
+    }
+    override fun deleteTvShowFavorite(tvShowId: Int) = appExecutors.diskIO().execute {
+        localDataSource.deleteTvShowFavorite(
+            tvShowId
+        )
+    }
+
+    fun nextTvShowFavorite(tvShowId: Int): LiveData<TvShowFavoriteEntity> = localDataSource.nextTvShowFavorite(tvShowId)
+    fun prevTvShowFavorite(tvShowId: Int): LiveData<TvShowFavoriteEntity> = localDataSource.prevTvShowFavorite(tvShowId)
 
 }

@@ -90,6 +90,18 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
         return resultTvShow
     }
 
+    fun getTvShowById(tvShowId: Int ) :LiveData<ApiResponse<TvShowResponse>> {
+        EspressoIdlingResource.increment()
+        val resultTvShow = MutableLiveData<ApiResponse<TvShowResponse>>()
+        handler.postDelayed(
+            {
+                resultTvShow.value = ApiResponse.success(jsonHelper.loadTvShowById(tvShowId))
+                EspressoIdlingResource.decrement()
+            },
+            SERVICE_LATENCY_IN_MILLIS
+        )
+        return resultTvShow
+    }
     fun getOtherTvShows(tvShowId: Int): LiveData<ApiResponse<List<TvShowResponse>>> {
         EspressoIdlingResource.increment()
         val resultTvShow = MutableLiveData<ApiResponse<List<TvShowResponse>>>()

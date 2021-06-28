@@ -201,6 +201,31 @@ class JsonHelper(private val context: Context) {
         return list
     }
 
+    fun loadTvShowById(tvShowId: Int): TvShowResponse {
+        val fileName = String.format("TvShow_%s.json", tvShowId)
+        var data : TvShowResponse? = null
+        try {
+
+            val responseObject = JSONObject(parsingFileToString(fileName).toString())
+            val backdrop_path = responseObject.getString("backdrop_path")
+            val first_air_date = responseObject.getString("first_air_date")
+            val id = responseObject.getInt("id")
+            val name = responseObject.getString("name")
+            val original_language = responseObject.getString("original_language")
+            val original_name = responseObject.getString("original_name")
+            val overview = responseObject.getString("overview")
+            val popularity = responseObject.getDouble("popularity")
+            val poster_path = responseObject.getString("poster_path")
+            val vote_average = responseObject.getDouble("vote_average")
+            val vote_count = responseObject.getInt("vote_count")
+
+            data = TvShowResponse(backdrop_path,first_air_date,id,name,original_language,original_name,overview,popularity,poster_path, vote_average, vote_count)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return data!!
+    }
+
 
     fun loadOtherTvShows(tvShowId: Int): List<TvShowResponse> {
         val list = ArrayList<TvShowResponse>()

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
 import com.example.dicodingmovie.data.AppRepository
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
@@ -26,7 +27,7 @@ class DetailMovieViewModel(private val appRepository: AppRepository) : ViewModel
             appRepository.getMovieFavoriteById(mMovieId)
         }
 
-    var getOthersMovies: LiveData<Resource<List<MovieEntity>>> =
+    var getOthersMovies: LiveData<Resource<PagedList<MovieEntity>>> =
         Transformations.switchMap(movieId) { mMovieId ->
             appRepository.getOthersMovies(mMovieId)
         }
@@ -35,12 +36,10 @@ class DetailMovieViewModel(private val appRepository: AppRepository) : ViewModel
         val movie = movieById.value
         val movieFavorite = movieFavoriteById.value
         if (movieFavorite != null) {
-            Log.e("Favorite delete", movieFavorite.id.toString())
             appRepository.deleteMovieFavorite(movieFavorite.id)
         } else {
             if (movie != null) {
                 if (movie.data != null) {
-                    Log.e("Favorite insert", movie.data.id.toString())
                     appRepository.insertMovieFavorite(movie.data)
 
                 }

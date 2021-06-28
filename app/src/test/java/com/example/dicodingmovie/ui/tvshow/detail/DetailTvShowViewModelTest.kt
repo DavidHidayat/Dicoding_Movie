@@ -3,11 +3,13 @@ package com.example.dicodingmovie.ui.tvshow.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
+import androidx.paging.PagedList
 import com.example.dicodingmovie.data.AppRepository
+import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
+import com.example.dicodingmovie.ui.tvshow.TvShowViewModelTest
 import com.example.dicodingmovie.utils.DataDummy
+import com.example.dicodingmovie.vo.Resource
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,10 +32,10 @@ class DetailTvShowViewModelTest{
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var tvShowObserver: Observer<TvShowEntity>
+    private lateinit var tvShowObserver: Observer<Resource<TvShowEntity>>
 
     @Mock
-    private lateinit var otherTvShowbserver: Observer<List<TvShowEntity>>
+    private lateinit var otherTvShowbserver: Observer<Resource<PagedList<TvShowEntity>>>
 
     @Before
     fun setUp() {
@@ -42,37 +44,38 @@ class DetailTvShowViewModelTest{
     }
 
     @Test
-    fun getTvShow() {
-        val tvShow = MutableLiveData<TvShowEntity>()
-        tvShow.value = dummyTvShow
+    fun tvShowById() {
+        val expected = MutableLiveData<Resource<TvShowEntity>>()
+        expected.value = Resource.success(dummyTvShow)
 
-        Mockito.`when`(appRepository.getTvShow(tvShowId)).thenReturn(tvShow)
-        val tvShowEntity = viewModel.getTvShow()
-        Mockito.verify<AppRepository>(appRepository).getTvShow(tvShowId)
-        assertNotNull(tvShowEntity)
-        assertEquals(dummyTvShow.id, tvShowEntity.value?.id)
-        assertEquals(dummyTvShow.name, tvShowEntity.value?.name)
-        assertEquals(dummyTvShow.first_air_date, tvShowEntity.value?.first_air_date)
-        assertEquals(dummyTvShow.overview, tvShowEntity.value?.overview)
-        assertEquals(dummyTvShow.poster_path, tvShowEntity.value?.poster_path)
+        Mockito.`when`(appRepository.getTvShowById(tvShowId)).thenReturn(expected)
 
-        viewModel.getTvShow().observeForever(tvShowObserver)
-        verify(tvShowObserver).onChanged(dummyTvShow)
+        viewModel.tvShowById.observeForever(tvShowObserver)
+        verify(tvShowObserver).onChanged(expected.value)
+
+        val expectedValue = expected.value
+        val actualValue = viewModel.tvShowById.value
+
+        val movie = MutableLiveData<TvShowEntity>()
+        movie.value = dummyTvShow
+
+        assertEquals(expectedValue, actualValue)
     }
 
     @Test
     fun getOthersTvShows() {
-        val dummyTvShow = DataDummy.generateDummyTvShow()
-        val tvShow = MutableLiveData<List<TvShowEntity>>()
-        tvShow.value = dummyTvShow
+        val dummyTvShows = TvShowViewModelTest.PagedTestDataSources.snapshot(DataDummy.generateDummyTvShow())
+        val expected = MutableLiveData<Resource<PagedList<TvShowEntity>>>()
+        expected.value = Resource.success(dummyTvShows)
 
-        Mockito.`when`(appRepository.getOthersTvShows(tvShowId)).thenReturn(tvShow)
-        val tvShowEntities = viewModel.getOthersTvShows()
-        Mockito.verify<AppRepository>(appRepository).getOthersTvShows(tvShowId)
-        assertNotNull(tvShowEntities)
-        assertEquals(10, tvShowEntities.value?.size)
+        Mockito.`when`(appRepository.getOthersTvShows(tvShowId)).thenReturn(expected)
 
-        viewModel.getOthersTvShows().observeForever(otherTvShowbserver)
-        Mockito.verify(otherTvShowbserver).onChanged(dummyTvShow)
+        viewModel.getOthersTvShows.observeForever(otherTvShowbserver)
+        verify(otherTvShowbserver).onChanged(expected.value)
+
+        val expectedValue = expected.value
+        val actualValue = viewModel.getOthersTvShows.value
+
+        assertEquals(expectedValue?.data?.size, actualValue?.data?.size)
     }
 }

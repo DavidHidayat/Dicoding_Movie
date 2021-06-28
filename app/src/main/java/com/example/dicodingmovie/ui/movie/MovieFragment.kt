@@ -29,7 +29,6 @@ class MovieFragment : Fragment() {
             val movieAdapter = MovieAdapter()
             viewModel.getMovies().observe(requireActivity(), { movies ->
                 if (movies != null) {
-                    Log.e("Movies",movies.toString())
                     when (movies.status) {
                         Status.LOADING -> fragmentMovieBinding?.progressBar?.visibility = View.VISIBLE
                         Status.SUCCESS -> {

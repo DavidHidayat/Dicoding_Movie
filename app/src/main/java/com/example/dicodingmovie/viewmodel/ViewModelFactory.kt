@@ -11,6 +11,8 @@ import com.example.dicodingmovie.ui.moviefavorite.MovieFavoriteViewModel
 import com.example.dicodingmovie.ui.moviefavorite.detail.DetailMovieFavoriteViewModel
 import com.example.dicodingmovie.ui.tvshow.TvShowViewModel
 import com.example.dicodingmovie.ui.tvshow.detail.DetailTvShowViewModel
+import com.example.dicodingmovie.ui.tvshowfavorite.detail.DetailTvShowFavoriteViewModel
+import com.example.dicodingtvShow.ui.tvshowfavorite.TvShowFavoriteViewModel
 
 class ViewModelFactory private constructor(private val mAppRepository: AppRepository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -46,6 +48,12 @@ class ViewModelFactory private constructor(private val mAppRepository: AppReposi
             }
             modelClass.isAssignableFrom(DetailTvShowViewModel::class.java) -> {
                 DetailTvShowViewModel(mAppRepository) as T
+            }
+            modelClass.isAssignableFrom(TvShowFavoriteViewModel::class.java) -> {
+                TvShowFavoriteViewModel(mAppRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailTvShowFavoriteViewModel::class.java) -> {
+                DetailTvShowFavoriteViewModel(mAppRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

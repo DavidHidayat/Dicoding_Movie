@@ -29,11 +29,6 @@ class DetailMovieActivity : AppCompatActivity() {
     private lateinit var viewModel: DetailMovieViewModel
     private var menu: Menu? = null
 
-    companion object {
-        const val MOVIE_ID = "movie_id"
-        const val MOVIE_TITLE = "movie_title"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,7 +71,6 @@ class DetailMovieActivity : AppCompatActivity() {
                     }
                 })
                 viewModel.getOthersMovies.observe(this, { movies ->
-                    Log.e("INIININNI",movies.toString())
                     if (movies != null) {
                         when (movies.status) {
                             Status.LOADING -> detailContentBinding?.progressBar?.visibility =
@@ -140,27 +134,31 @@ class DetailMovieActivity : AppCompatActivity() {
             if (movie != null) {
                 state = true
             }
-            Log.e("Set Bookmark", state.toString())
-            setBookmarkState(state)
+            setfavoritState(state)
         })
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_bookmark) {
+        if (item.itemId == R.id.action_favorit) {
             viewModel.setFavorite()
             return true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setBookmarkState(state: Boolean) {
+    private fun setfavoritState(state: Boolean) {
         if (menu == null) return
-        val menuItem = menu?.findItem(R.id.action_bookmark)
+        val menuItem = menu?.findItem(R.id.action_favorit)
         if (state) {
-            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmarked_white)
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorited_white)
         } else {
-            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_white)
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_white)
         }
     }
+    companion object {
+        const val MOVIE_ID = "movie_id"
+        const val MOVIE_TITLE = "movie_title"
+    }
+
 }

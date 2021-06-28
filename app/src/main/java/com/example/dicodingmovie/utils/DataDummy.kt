@@ -13,20 +13,20 @@ object DataDummy {
 
         movies.add(
             MovieEntity(
-            adult = false,
-            backdropPath = "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg",
-            id = 423108,
-            originalLanguage = "en",
-            originalTitle = "The Conjuring: The Devil Made Me Do It",
-            overview = "Paranormal investigators Ed and Lorraine Warren encounter what would become one of the most sensational cases from their files. The fight for the soul of a young boy takes them beyond anything they'd ever seen before, to mark the first time in U.S. history that a murder suspect would claim demonic possession as a defense.",
-            popularity = 5355.58,
-            posterPath = "/xbSuFiJbbBWCkyCCKIMfuDCA4yV.jpg",
-            releaseDate = "2021-05-25",
-            title = "The Conjuring: The Devil Made Me Do It",
-            video = false,
-            voteAverage = 8.3,
-            voteCount = 1832
-        )
+                adult =  false,
+                backdropPath =  "/6MKr3KgOLmzOP6MSuZERO41Lpkt.jpg",
+                id =  337404,
+                originalLanguage =  "en",
+                originalTitle =  "Cruella",
+                overview =  "In 1970s London amidst the punk rock revolution, a young grifter named Estella is determined to make a name for herself with her designs. She befriends a pair of young thieves who appreciate her appetite for mischief, and together they are able to build a life for themselves on the London streets. One day, Estella\u2019s flair for fashion catches the eye of the Baroness von Hellman, a fashion legend who is devastatingly chic and terrifyingly haute. But their relationship sets in motion a course of events and revelations that will cause Estella to embrace her wicked side and become the raucous, fashionable and revenge-bent Cruella.",
+                popularity =  5771.292,
+                posterPath =  "/rTh4K5uw9HypmpGslcKd4QfHl93.jpg",
+                releaseDate =  "2021-05-26",
+                title =  "Cruella",
+                video =  false,
+                voteAverage =  8.6,
+                voteCount =  2515
+            )
         )
         movies.add(
             MovieEntity(
@@ -222,18 +222,18 @@ object DataDummy {
         val tv_shows = ArrayList<TvShowEntity>()
         tv_shows.add(
             TvShowEntity(
-            backdropPath = "/Afp8OhiO0Ajb3NPoCBvfu2pqaeO.jpg",
-            firstAirDate = "2021-06-09",
-            id = 84958,
-            name = "Loki",
-            originalLanguage = "en",
-            originalName = "Loki",
-            overview = "After stealing the Tesseract during the events of “Avengers: Endgame,” an alternate version of Loki is brought to the mysterious Time Variance Authority, a bureaucratic organization that exists outside of time and space and monitors the timeline. They give Loki a choice: face being erased from existence due to being a “time variant”or help fix the timeline and stop a greater threat.",
-            popularity = 2696.861,
-            posterPath = "/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
-            voteAverage = 8.2,
-            voteCount = 1851
-        )
+                backdropPath =  "/suopoADq0k8YZr4dQXcU6pToj6s.jpg",
+                firstAirDate =  "2011-04-17",
+                id =  1399,
+                name =  "Game of Thrones",
+                originalLanguage =  "en",
+                originalName =  "Game of Thrones",
+                overview =  "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
+                popularity =  446.618,
+                posterPath =  "/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg",
+                voteAverage =  8.4,
+                voteCount =  14696
+            )
         )
         tv_shows.add(
             TvShowEntity(

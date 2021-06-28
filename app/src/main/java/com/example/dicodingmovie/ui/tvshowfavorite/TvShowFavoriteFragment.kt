@@ -1,48 +1,52 @@
-package com.example.dicodingmovie.ui.moviefavorite
+package com.example.dicodingTV_SHOW.ui.tvshowfavorite
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingmovie.R
-import com.example.dicodingmovie.databinding.FragmentMovieFavoriteBinding
+import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
+import com.example.dicodingmovie.databinding.FragmentTvShowFavoriteBinding
+import com.example.dicodingmovie.ui.tvshowfavorite.TvShowFavoriteAdapter
 import com.example.dicodingmovie.viewmodel.ViewModelFactory
+import com.example.dicodingtvShow.ui.tvshowfavorite.TvShowFavoriteViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class MovieFavoriteFragment : Fragment() {
-    private lateinit var fragment: FragmentMovieFavoriteBinding
-    private lateinit var viewModel: MovieFavoriteViewModel
-    private lateinit var movieAdapter: MovieFavoriteAdapter
+class TvShowFavoriteFragment : Fragment() {
+    private lateinit var fragment: FragmentTvShowFavoriteBinding
+    private lateinit var viewModel: TvShowFavoriteViewModel
+    private lateinit var tvShowAdapter: TvShowFavoriteAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        fragment = FragmentMovieFavoriteBinding.inflate(layoutInflater, container, false)
+        fragment = FragmentTvShowFavoriteBinding.inflate(layoutInflater, container, false)
         return fragment.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        itemTouchHelper.attachToRecyclerView(fragment?.rvMoviesFavorite)
+        itemTouchHelper.attachToRecyclerView(fragment?.rvTvShowsFavorite)
         if (activity != null) {
             val factory = ViewModelFactory.getInstance(requireActivity())
-            viewModel = ViewModelProvider(this, factory)[MovieFavoriteViewModel::class.java]
-            movieAdapter = MovieFavoriteAdapter()
+            viewModel = ViewModelProvider(this, factory)[TvShowFavoriteViewModel::class.java]
+            tvShowAdapter = TvShowFavoriteAdapter()
             fragment?.progressBar?.visibility = View.VISIBLE
-            viewModel.getMovies().observe(requireActivity(), { movies ->
-                if (movies != null) {
+            viewModel.getTvShows().observe(requireActivity(), { tvShows ->
+                if (tvShows != null) {
                     fragment?.progressBar?.visibility = View.GONE
-                    movieAdapter.submitList(movies)
-                    movieAdapter.notifyDataSetChanged()
+                    tvShowAdapter.submitList(tvShows)
+                    tvShowAdapter.notifyDataSetChanged()
                 }
             })
-            with(fragment?.rvMoviesFavorite) {
+            with(fragment?.rvTvShowsFavorite) {
                 this?.layoutManager = LinearLayoutManager(context)
                 this?.setHasFixedSize(true)
-                this?.adapter = movieAdapter
+                this?.adapter = tvShowAdapter
             }
         }
     }
@@ -53,14 +57,15 @@ class MovieFavoriteFragment : Fragment() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             if (view != null) {
                 val swipedPosition = viewHolder.adapterPosition
-                val movieFavoriteEntity = movieAdapter.getSwipedData(swipedPosition)
-                movieFavoriteEntity?.let { viewModel.removeFavorite(it) }
+                val tvShowFavoriteEntity = tvShowAdapter.getSwipedData(swipedPosition)
+                tvShowFavoriteEntity?.let { viewModel.removeFavorite(it) }
                 val snackbar = Snackbar.make(view as View, R.string.message_undo, Snackbar.LENGTH_LONG)
                 snackbar.setAction(R.string.message_ok) { v ->
-                    movieFavoriteEntity?.let { viewModel.insertFavorite(it) }
+                    tvShowFavoriteEntity?.let { viewModel.insertFavorite(it) }
                 }
                 snackbar.show()
             }
         }
     })
+
 }

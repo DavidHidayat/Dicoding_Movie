@@ -1,9 +1,12 @@
 package com.example.dicodingmovie.ui.tvshow.detail
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,12 +22,18 @@ import com.example.dicodingmovie.vo.Status
 
 class DetailTvShowActivity : AppCompatActivity() {
 
+    private lateinit var activityDetailTvShowBinding : ActivityDetailTvShowBinding
+
     private lateinit var detailTvShowBinding: ContentDetailTvShowBinding
+
+    private lateinit var viewModel: DetailTvShowViewModel
+    private var menu: Menu? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val activityDetailTvShowBinding = ActivityDetailTvShowBinding.inflate(layoutInflater)
+        activityDetailTvShowBinding = ActivityDetailTvShowBinding.inflate(layoutInflater)
         detailTvShowBinding = activityDetailTvShowBinding.detailTvShow
 
         setContentView(activityDetailTvShowBinding.root)
@@ -35,7 +44,7 @@ class DetailTvShowActivity : AppCompatActivity() {
         val adapter = DetailTvShowAdapter()
 
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[DetailTvShowViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[DetailTvShowViewModel::class.java]
 
         val extras = intent.extras
 
@@ -43,13 +52,13 @@ class DetailTvShowActivity : AppCompatActivity() {
             val tvShowId = extras.getInt(TV_SHOW_ID)
             if (tvShowId != null) {
                 viewModel.setSelectedTvShow(tvShowId)
-                viewModel.getTvShow().observe(this, { tvShow ->
+                viewModel.tvShowById.observe(this, { tvShow ->
                     if (tvShow != null) {
                         when (tvShow.status) {
                             Status.LOADING -> detailTvShowBinding?.progressBar?.visibility = View.VISIBLE
                             Status.SUCCESS -> if (tvShow.data != null) {
                                 detailTvShowBinding?.progressBar?.visibility = View.GONE
-                                populateTvShow(tvShow.data[0])
+                                populateTvShow(tvShow.data)
                             }
                             Status.ERROR -> {
                                 detailTvShowBinding?.progressBar?.visibility = View.GONE
@@ -58,7 +67,7 @@ class DetailTvShowActivity : AppCompatActivity() {
                         }
                     }
                 })
-                viewModel.getOthersTvShows().observe(this, { tvShow ->
+                viewModel.getOthersTvShows.observe(this, { tvShow ->
                     if (tvShow != null) {
                         when (tvShow.status) {
                             Status.LOADING -> detailTvShowBinding?.progressBar?.visibility = View.VISIBLE
@@ -103,6 +112,37 @@ class DetailTvShowActivity : AppCompatActivity() {
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                 .error(R.drawable.ic_error))
             .into(detailTvShowBinding.imagePoster)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        this.menu = menu
+        viewModel.tvShowFavoriteById.observe(this, { tvShow ->
+            var state: Boolean = false
+            if (tvShow != null) {
+                state = true
+            }
+            setfavoritState(state)
+        })
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_favorit) {
+            viewModel.setFavorite()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setfavoritState(state: Boolean) {
+        if (menu == null) return
+        val menuItem = menu?.findItem(R.id.action_favorit)
+        if (state) {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorited_white)
+        } else {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_white)
+        }
     }
 
     companion object {

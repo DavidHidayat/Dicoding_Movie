@@ -6,6 +6,7 @@
     <string name="movie">Movie</string>
     <string name="movie_favorite">Movie Favorite</string>
     <string name="tv_show">Tv Show</string>
+    <string name="tv_show_favorite">Tv Show Favorite</string>
 
     <string name="title">Title</string>
     <string name="release_date">Release Date</string>
@@ -17,11 +18,20 @@
 
     <string name="example">Example</string>
     <string name="share_text">"Let's watch a %smovie"</string>
-    <string name="menu_bookmark">bookmark</string>
+    <string name="menu_favorit">favorit</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="message_ok">OK</string>
     <string name="message_undo">Batalkan menghapus item sebelumnya?</string>
 
     <string name="image_base_url">http://image.tmdb.org/t/p/w500%s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detail_tv_show_favorite">DetailTvShowFavoriteActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
