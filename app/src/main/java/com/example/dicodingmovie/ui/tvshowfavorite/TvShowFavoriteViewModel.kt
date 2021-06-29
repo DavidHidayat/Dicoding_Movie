@@ -10,7 +10,7 @@ import com.example.dicodingmovie.data.source.local.entity.TvShowFavoriteEntity
 class TvShowFavoriteViewModel (private val appRepository: AppRepository): ViewModel() {
     fun getTvShows(): LiveData<PagedList<TvShowFavoriteEntity>> = appRepository.getFavoritedTvShow()
 
-    fun removeFavorite(tvShowFavoriteEntity: TvShowFavoriteEntity) {
+    fun removeFavorite(tvShowFavoriteEntity: TvShowFavoriteEntity?) {
         if (tvShowFavoriteEntity != null) {
             appRepository.deleteTvShowFavorite(tvShowFavoriteEntity.id)
         }

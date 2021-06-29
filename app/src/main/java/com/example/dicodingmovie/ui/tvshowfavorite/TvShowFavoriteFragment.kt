@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingmovie.R
-import com.example.dicodingmovie.data.source.local.entity.TvShowEntity
 import com.example.dicodingmovie.databinding.FragmentTvShowFavoriteBinding
 import com.example.dicodingmovie.ui.tvshowfavorite.TvShowFavoriteAdapter
 import com.example.dicodingmovie.viewmodel.ViewModelFactory

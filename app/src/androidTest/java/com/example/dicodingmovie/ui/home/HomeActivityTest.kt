@@ -12,8 +12,10 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.example.dicodingmovie.R
+import com.example.dicodingmovie.RecyclerViewItemCountAssertion.Companion.withItemCount
 import com.example.dicodingmovie.utils.DataDummy
 import com.example.dicodingmovie.utils.EspressoIdlingResource
+import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -102,5 +104,39 @@ class HomeActivityTest{
         onView(withId(R.id.image_poster)).check(matches(isDisplayed()))
 
     }
+
+
+    @Test
+    fun deleteMovieFavorite() {
+        onView(withText("Movie")).perform(click())
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(3, click()))
+        onView(withId(R.id.tv_title)).check(matches(isDisplayed()))
+        onView(withId(R.id.action_favorit)).perform(click())
+        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(withText("Movie Favorite")).perform(click())
+        onView(withId(R.id.rv_movies_favorite)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movies_favorite)).check(withItemCount(Matchers.greaterThanOrEqualTo(2))) //sesuaikan nilainya dengan keseluruhan skenario add favorite yang dijalankan
+        onView(withId(R.id.rv_movies_favorite)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withId(R.id.action_favorit)).perform(click())
+        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(withId(R.id.rv_movies_favorite)).check(withItemCount(Matchers.lessThan(2)))
+    }
+
+    @Test
+    fun deleteTvShowsFavorite() {
+        onView(withText("Tv Show")).perform(click())
+        onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(3, click()))
+        onView(withId(R.id.tv_title)).check(matches(isDisplayed()))
+        onView(withId(R.id.action_favorit)).perform(click())
+        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(withText("Tv Show Favorite")).perform(click())
+        onView(withId(R.id.rv_tv_shows_favorite)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_tv_shows_favorite)).check(withItemCount(2))
+        onView(withId(R.id.rv_tv_shows_favorite)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withId(R.id.action_favorit)).perform(click())
+        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(withId(R.id.rv_tv_shows_favorite)).check(withItemCount(Matchers.lessThanOrEqualTo(2)))
+    }
+
 
 }

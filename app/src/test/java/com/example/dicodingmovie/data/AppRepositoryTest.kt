@@ -146,19 +146,35 @@ class AppRepositoryTest {
 
     @Test
     fun getMovieFavoriteById() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MovieFavoriteEntity>
-        Mockito.`when`(local.getMovieFavoriteById(movieId)).thenReturn(dataSourceFactory)
-        appRepository.getMovieFavoriteById(movieId)
+        val liveDataMovieFavorite = MutableLiveData<MovieFavoriteEntity>().apply {
+            value = MovieFavoriteEntity(
+                false,
+                "/6ELCZlTA5lGUops70hKdB83WJxH.jpg",
+                460465,
+                "en",
+                "Mortal Kombat",
+                "Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
+                2437.17,
+                "/nkayOAUBUu4mMvyNf9iHSUiPjF1.jpg",
+                "2021-04-07",
+                "Mortal Kombat",
+                false,
+                7.6,
+                2594
+            )
+        }
 
-        val movieEntities = LiveDataTestUtil.getValue(appRepository.getMovieById(movieLocalId))
-        verify(local).getMovieFavoriteById(eq(movieLocalId))
+        Mockito.`when`(local.getMovieFavoriteById(movieId)).thenReturn(liveDataMovieFavorite)
 
-        assertNotNull(movieEntities)
-        assertEquals(movieData.id, movieEntities.data?.id)
-        assertEquals(movieData.title, movieEntities.data?.title)
-        assertEquals(movieData.releaseDate, movieEntities.data?.releaseDate)
-        assertEquals(movieData.overview, movieEntities.data?.overview)
-        assertEquals(movieData.posterPath, movieEntities.data?.posterPath)
+        val movieEntities = LiveDataTestUtil.getValue(appRepository.getMovieFavoriteById(movieId))
+        verify(local).getMovieFavoriteById(eq(movieId))
+
+        Assert.assertNotNull(movieEntities)
+        Assert.assertEquals(movieData.id, movieEntities.id)
+        Assert.assertEquals(movieData.title, movieEntities.title)
+        Assert.assertEquals(movieData.releaseDate, movieEntities.releaseDate)
+        Assert.assertEquals(movieData.overview, movieEntities.overview)
+        Assert.assertEquals(movieData.posterPath, movieEntities.posterPath)
     }
 
     @Test
@@ -175,21 +191,33 @@ class AppRepositoryTest {
 
     @Test
     fun getTvShowFavoriteById() {
-        doAnswer { invocation ->
-            (invocation.arguments[1] as RemoteDataSource.LoadTvShowCallback)
-                .onTvShowReceived(tvShowData)
-            null
+        doAnswer {
+            return@doAnswer MutableLiveData<TvShowFavoriteEntity>().apply {
+                value = TvShowFavoriteEntity(
+                    "/dYvIUzdh6TUv4IFRq8UBkX7bNNu.jpg",
+                    "2021-03-24",
+                    120168,
+                    "Who Killed Sara?",
+                    "es",
+                    "¿Quién mató a Sara?",
+                    "Hell-bent on exacting revenge and proving he was framed for his sister's murder, Álex sets out to unearth much more than the crime's real culprit.",
+                    1606.074,
+                    "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg",
+                    7.8,
+                    658
+                )
+            }
         }.`when`(local).getTvShowFavoriteById(eq(tvShowId))
 
-        val tvShowEntities = LiveDataTestUtil.getValue(appRepository.getTvShowById(tvShowId))
+        val tvShowEntities = LiveDataTestUtil.getValue(appRepository.getTvShowFavoriteById(tvShowId))
         verify(local).getTvShowFavoriteById(eq(tvShowId))
 
-        assertNotNull(tvShowEntities)
-        assertEquals(tvShowData.id, tvShowEntities.data?.id)
-        assertEquals(tvShowData.name, tvShowEntities.data?.name)
-        assertEquals(tvShowData.firstAirDate, tvShowEntities.data?.firstAirDate)
-        assertEquals(tvShowData.overview, tvShowEntities.data?.overview)
-        assertEquals(tvShowData.posterPath, tvShowEntities.data?.posterPath)
+        Assert.assertNotNull(tvShowEntities)
+        Assert.assertEquals(tvShowData.id, tvShowEntities.id)
+        Assert.assertEquals(tvShowData.name, tvShowEntities.name)
+        Assert.assertEquals(tvShowData.firstAirDate, tvShowEntities.firstAirDate)
+        Assert.assertEquals(tvShowData.overview, tvShowEntities.overview)
+        Assert.assertEquals(tvShowData.posterPath, tvShowEntities.posterPath)
     }
 
 }

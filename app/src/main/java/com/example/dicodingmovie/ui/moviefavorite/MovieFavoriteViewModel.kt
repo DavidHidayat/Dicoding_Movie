@@ -1,18 +1,16 @@
 package com.example.dicodingmovie.ui.moviefavorite
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.dicodingmovie.data.AppRepository
 import com.example.dicodingmovie.data.source.local.entity.MovieEntity
 import com.example.dicodingmovie.data.source.local.entity.MovieFavoriteEntity
-import com.example.dicodingmovie.vo.Resource
 
 class MovieFavoriteViewModel(private val appRepository: AppRepository): ViewModel() {
     fun getMovies(): LiveData<PagedList<MovieFavoriteEntity>> = appRepository.getFavoritedMovie()
 
-    fun removeFavorite(movieFavoriteEntity: MovieFavoriteEntity) {
+    fun removeFavorite(movieFavoriteEntity: MovieFavoriteEntity?) {
         if (movieFavoriteEntity != null) {
             appRepository.deleteMovieFavorite(movieFavoriteEntity.id)
         }
